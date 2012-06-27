@@ -28,6 +28,7 @@ module Arsenal
     end
 
     class self::Collection < Array
+      include Arsenal::CollectionMethods
     end
 
     Arsenal.create_nil_method!(self)
