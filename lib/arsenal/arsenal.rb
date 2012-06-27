@@ -34,7 +34,6 @@ module Arsenal
     Arsenal.create_nil_method!(self)
   end
 
-
   module ClassMethods
 
   end
@@ -46,6 +45,10 @@ module Arsenal
     
     def savable? 
       true
+    end
+
+    def attributes
+      {}
     end
   end
 end

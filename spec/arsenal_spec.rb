@@ -60,6 +60,8 @@ describe "The Arsenal Module" do
 
         it { should respond_to :savable? }
         it { should be_savable } 
+
+        it { should respond_to :attributes } 
       end
     end
 
@@ -130,6 +132,8 @@ describe "The Arsenal Module" do
 
       it { should respond_to :savable? }
       it { should_not be_savable } 
+
+      it { should respond_to :attributes } 
 
       describe 'nil_<model_name>' do
         subject { nil_example }

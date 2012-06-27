@@ -10,6 +10,8 @@ module Arsenal
       def nil?       ; true  ; end
       def persisted? ; false ; end
       def savable?   ; false ; end
+
+      def attributes ; {}    ; end
     end
   end
 end
