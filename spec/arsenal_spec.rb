@@ -63,6 +63,8 @@ describe "The Arsenal Module" do
         subject { Example } 
 
         it { should respond_to :id }
+        it { should respond_to :attribute } 
+
       end
 
       context 'instance' do

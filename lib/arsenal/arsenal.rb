@@ -40,6 +40,10 @@ module Arsenal
     def id(method)
       @__identifier_method = method.to_sym
     end
+
+    def attribute
+
+    end
   end
 
   module InstanceMethods
