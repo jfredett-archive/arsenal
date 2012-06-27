@@ -35,7 +35,11 @@ module Arsenal
   end
 
   module ClassMethods
+    attr_reader :__identifier_method
 
+    def id(method)
+      @__identifier_method = method.to_sym
+    end
   end
 
   module InstanceMethods
@@ -47,8 +51,12 @@ module Arsenal
       true
     end
 
+    def id
+      send(self.class.__identifier_method) 
+    end
+
     def attributes
-      {}
+      { id: id }
     end
   end
 end

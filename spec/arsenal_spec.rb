@@ -28,7 +28,17 @@ describe "The Arsenal Module" do
   end
 
   context "after it's included" do
-    before { class Example ; include Arsenal ; end }
+    before { 
+      class Example
+        include Arsenal 
+        id :identifier
+
+        def identifier
+          $identifier_number ||= 0
+          $identifier_number += 1
+        end
+      end 
+    }
 
 
     it "hasn't yet defined the Example::Repository class" do
@@ -48,13 +58,17 @@ describe "The Arsenal Module" do
     end
 
     describe 'Example' do
-      context 'class' do
 
+      context 'class' do
+        subject { Example } 
+
+        it { should respond_to :id }
       end
 
       context 'instance' do
-        subject { Example.new } 
-        
+        let(:example) { Example.new }
+        subject { example } 
+
         it { should respond_to :persisted? }
         it { should_not be_persisted }
 
@@ -62,6 +76,12 @@ describe "The Arsenal Module" do
         it { should be_savable } 
 
         it { should respond_to :attributes } 
+        it { should respond_to :id }
+
+        describe "#attributes" do
+          subject { example.attributes } 
+          its(:keys) { should include(:id) }
+        end
       end
     end
 
@@ -74,7 +94,7 @@ describe "The Arsenal Module" do
 
       context 'instance' do
         subject { Example::Persisted.new } 
-        
+
         it { should respond_to :persisted? }
         it { should be_persisted }
 
@@ -134,6 +154,13 @@ describe "The Arsenal Module" do
       it { should_not be_savable } 
 
       it { should respond_to :attributes } 
+      it { should respond_to :id }
+      its(:id) { should be_nil }
+
+      describe "#attributes" do
+        subject { nil_example.attributes } 
+        its(:keys) { should include(:id) }
+      end
 
       describe 'nil_<model_name>' do
         subject { nil_example }
