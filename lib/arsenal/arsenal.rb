@@ -15,23 +15,28 @@ module Arsenal
   end
 
   included do
-    class self::Repository 
+    extend Forwardable
+
+    base = self
+
+    base::Repository = Class.new do
       include Arsenal::RepositoryMethods
     end
 
-    class self::Nil 
+    base::Nil = Class.new do
       include Arsenal::NilMethods
     end
+    base::Nil.nil_model = base
 
-    class self::Persisted < self
+    base::Persisted = Class.new(base) do
       include Arsenal::PersistedMethods
     end
 
-    class self::Collection < Array
+    base::Collection = Class.new(Array) do
       include Arsenal::CollectionMethods
     end
 
-    Arsenal.create_nil_method!(self)
+    Arsenal.create_nil_method!(base)
   end
 
   module ClassMethods
