@@ -47,11 +47,33 @@ describe "The Arsenal Module" do
       "Example::Collection".should be_defined
     end
 
+    describe 'Example' do
+      context 'class' do
 
-    describe 'Example::Persisted', 'class' do
-      subject { Example::Persisted } 
+      end
 
-      its(:superclass) { should be Example }
+      context 'instance' do
+        subject { Example.new } 
+        
+        it { should respond_to :persisted? }
+        it { should_not be_persisted }
+
+      end
+    end
+
+    describe 'Example::Persisted' do
+      context 'class' do
+        subject { Example::Persisted } 
+
+        its(:superclass) { should be Example }
+      end
+
+      context 'instance' do
+        subject { Example::Persisted.new } 
+        
+        it { should respond_to :persisted? }
+        it { should be_persisted }
+      end
     end
 
     describe 'Example::Collection', 'class' do
@@ -66,6 +88,15 @@ describe "The Arsenal Module" do
       it { should respond_to :nil? }
       it { should be_nil } 
       it { should be_a Singleton } 
+
+      it { should respond_to :persisted? }
+      it { should_not be_persisted }
+
+      describe 'nil_<model_name>' do
+        subject { nil_example }
+
+        it { should be_the Example::Nil } 
+      end
     end
 
     describe 'Example::Repository' do
