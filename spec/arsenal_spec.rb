@@ -81,10 +81,41 @@ describe "The Arsenal Module" do
       end
     end
 
-    describe 'Example::Collection', 'class' do
-      subject { Example::Collection } 
+    describe 'Example::Collection' do
+      context 'instance' do 
+        subject { Example::Collection.new([Example.new, Example.new, Example::Persisted.new, nil_example]) }
 
-      its(:superclass) { should be Array } 
+        it { should respond_to :each } 
+
+        it "delegates calls it doesn't understand to it's elements" do
+          subject.each { |e| e.should_receive(:foo) } 
+          subject.foo
+        end
+
+        it "takes methods of the form #any_<predicate>? and turns them into a .any? call" do
+          subject.each { |e| e.should_receive(:predicate?).at_most(:once) } 
+          subject.should_receive(:any?)
+          subject.any_predicate?
+        end
+
+        it "takes methods of the form #all_<predicate>? and turns them into a .all? call" do
+          subject.each { |e| e.should_receive(:predicate?).at_most(:once) } 
+          subject.should_receive(:all?)
+          subject.all_predicate?
+        end
+
+        it "aliases #savable? to #all_savable?" do
+          subject.each { |e| e.should_receive(:savable?).at_most(:once) } 
+          subject.should_receive(:all?)
+          subject.savable?
+        end
+
+        it "aliases #persisted? to #all_persisted?" do
+          subject.each { |e| e.should_receive(:persisted?).at_most(:once) } 
+          subject.should_receive(:all?)
+          subject.savable?
+        end
+      end
     end
 
     describe 'Example::Nil', 'instance' do
