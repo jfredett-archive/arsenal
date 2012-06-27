@@ -34,18 +34,6 @@ module Arsenal
   end
 
 
-
-  module PersistedMethods
-    extend ActiveSupport::Concern
-
-    module InstanceMethods
-      def persisted? 
-        true
-      end
-
-    end
-  end
-
   module ClassMethods
 
   end
