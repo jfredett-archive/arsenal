@@ -34,24 +34,6 @@ module Arsenal
   end
 
 
-  module RepositoryMethods
-    extend ActiveSupport::Concern
-
-    module ClassMethods
-      def save
-
-      end
-
-      def find
-
-      end
-
-      def destroy
-
-      end
-    end
-  end
-
   module NilMethods
     extend ActiveSupport::Concern
 
