@@ -62,6 +62,7 @@ module Arsenal
     module InstanceMethods
       def nil?       ; true  ; end
       def persisted? ; false ; end
+      def savable?   ; false ; end
     end
   end
 
@@ -72,6 +73,7 @@ module Arsenal
       def persisted? 
         true
       end
+
     end
   end
 
@@ -82,6 +84,10 @@ module Arsenal
   module InstanceMethods
     def persisted? 
       false
+    end
+    
+    def savable? 
+      true
     end
   end
 end

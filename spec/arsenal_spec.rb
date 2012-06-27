@@ -58,6 +58,8 @@ describe "The Arsenal Module" do
         it { should respond_to :persisted? }
         it { should_not be_persisted }
 
+        it { should respond_to :savable? }
+        it { should be_savable } 
       end
     end
 
@@ -73,6 +75,9 @@ describe "The Arsenal Module" do
         
         it { should respond_to :persisted? }
         it { should be_persisted }
+
+        it { should respond_to :savable? }
+        it { should be_savable } 
       end
     end
 
@@ -91,6 +96,9 @@ describe "The Arsenal Module" do
 
       it { should respond_to :persisted? }
       it { should_not be_persisted }
+
+      it { should respond_to :savable? }
+      it { should_not be_savable } 
 
       describe 'nil_<model_name>' do
         subject { nil_example }
