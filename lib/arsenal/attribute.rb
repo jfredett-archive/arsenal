@@ -13,6 +13,10 @@ module Arsenal
       @attrs = arr
     end
 
+    def keys
+      @attrs.map { |a| a.name } 
+    end
+
     def <<(attr)
       raise ArgumentError unless attr.respond_to? :name and attr.respond_to? :default
       @attrs << attr

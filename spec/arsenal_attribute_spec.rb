@@ -22,8 +22,13 @@ describe Arsenal::AttributeCollection do
 
   subject { collection }
 
-  it { should respond_to :[] }
-  it { should respond_to :<< } 
+  it { should respond_to :[]   }
+  it { should respond_to :<<   } 
+  it { should respond_to :keys } 
+
+  describe '#keys' do
+    its(:keys) { should =~ [:fye, :foe, :fee] }
+  end
 
   describe '#<<' do
     let(:attr_test1) { Arsenal::Attribute.new(:test1) } 
