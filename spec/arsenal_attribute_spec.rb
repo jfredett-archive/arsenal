@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Arsenal::Attribute do
-  subject { Arsenal::Attribute.new(:foo, defaults: :baz) } 
+  subject { Arsenal::Attribute.new(:foo, default: :baz) } 
 
   it { should respond_to :name }
   it { should respond_to :default }
@@ -14,9 +14,9 @@ describe Arsenal::Attribute do
 end
 
 describe Arsenal::AttributeCollection do
-  let(:attr1) { Arsenal::Attribute.new(:fee, defaults: :tweedle) }
-  let(:attr2) { Arsenal::Attribute.new(:fye, defaults: :deedle)  }
-  let(:attr3) { Arsenal::Attribute.new(:foe, defaults: :dum)     }
+  let(:attr1) { Arsenal::Attribute.new(:fee, default: :tweedle) }
+  let(:attr2) { Arsenal::Attribute.new(:fye, default: :deedle)  }
+  let(:attr3) { Arsenal::Attribute.new(:foe, default: :dum)     }
 
   let(:collection) { Arsenal::AttributeCollection.new([attr1, attr2, attr3]) }
 
