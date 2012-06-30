@@ -2,6 +2,11 @@ module Arsenal
   class Attribute
     attr_reader :name, :default
 
+    def value(instance)
+      return @default unless instance.respond_to?(@name)
+      instance.send(@name)  
+    end
+
     def initialize(name, opts = {})
       @name = name
       @default = opts[:default]
