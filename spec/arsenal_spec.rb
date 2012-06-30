@@ -63,6 +63,29 @@ describe "The Arsenal Module" do
         it { should respond_to :id }
         it { should respond_to :attribute } 
 
+        describe '#attribute' do
+          before do
+            class Example
+              attribute :foo, 
+                default: :default_thing
+
+              attribute :bar
+
+              def foo
+                :thing 
+              end
+
+              def bar ; end
+            end
+          end
+
+          subject { Example.new } 
+
+          it "optionally takes a default value, which is used by the nil-model to populate it's #attributes" do
+            subject.foo.should == :thing
+            nil_example.foo.should == :default_thing
+          end
+        end
       end
 
       context 'instance' do
@@ -141,6 +164,18 @@ describe "The Arsenal Module" do
     end
 
     describe 'Example::Nil', 'instance' do
+      before {
+        class Example
+          attribute :foo, :default => :bar
+          attribute :flurm, :default => :slurm
+        end
+        
+        class Example::Nil
+          def flurm ; :thing ; end
+        end
+      }
+
+
       subject { Example::Nil.instance } 
 
       it { should respond_to :nil? }
@@ -157,9 +192,15 @@ describe "The Arsenal Module" do
       it { should respond_to :id }
       its(:id) { should be_nil }
 
+      # respects overrides of defaulted attribute methods
+      its(:flurm) { should == :thing }
+      # gives the attributes' default value it the attribute name is called as a method 
+      its(:foo) { should == :bar } 
+
       describe "#attributes" do
         subject { nil_example.attributes } 
         its(:keys) { should include(:id) }
+        its(:keys) { should be_a_subset_of(Example.attributes.keys) } 
       end
 
       describe 'nil_<model_name>' do
