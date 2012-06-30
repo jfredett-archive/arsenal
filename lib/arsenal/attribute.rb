@@ -11,9 +11,14 @@ module Arsenal
       @default.present?
     end
 
+    def required? 
+      !!@required
+    end
+
     def initialize(name, opts = {})
       @name = name
       @default = opts[:default]
+      @required = opts[:required]
     end
   end
 

@@ -4,27 +4,31 @@ describe 'Attributes and Attribute Collections' do
   describe Arsenal::Attribute do
     let(:attribute) { Arsenal::Attribute.new(:foo, default: :baz) } 
     let(:attribute_no_default) { Arsenal::Attribute.new(:quux) } 
+    let(:attribute_required) { Arsenal::Attribute.new(:chex, required: true) } 
 
     subject { attribute } 
 
     it { should respond_to :name }
     it { should respond_to :value } 
-
-
-
+    it { should respond_to :required? } 
     it { should respond_to :default }
-    its(:default) { should == :baz } 
-    
     it { should respond_to :has_default? } 
-    describe '#has_default?' do 
-      context 'when the attribute sets a default value' do
-        subject { attribute }
-        it { should have_default } 
-      end
 
-      context 'when the attribute does not set a default value' do
-        subject { attribute_no_default }
-        it { should_not have_default } 
+
+
+    describe '#default' do
+      its(:default) { should == :baz } 
+
+      describe '#has_default?' do 
+        context 'when the attribute sets a default value' do
+          subject { attribute }
+          it { should have_default } 
+        end
+
+        context 'when the attribute does not set a default value' do
+          subject { attribute_no_default }
+          it { should_not have_default } 
+        end
       end
     end
 
@@ -39,7 +43,6 @@ describe 'Attributes and Attribute Collections' do
         it { should == 'the_value' } 
       end
     end
-
 
     pending 'drivers' do
       it { should respond_to :drivers }
