@@ -7,6 +7,10 @@ module Arsenal
       instance.send(@name)  
     end
 
+    def has_default?
+      @default.present?
+    end
+
     def initialize(name, opts = {})
       @name = name
       @default = opts[:default]

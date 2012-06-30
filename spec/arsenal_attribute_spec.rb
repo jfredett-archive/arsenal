@@ -3,15 +3,32 @@ require 'spec_helper'
 describe 'Attributes and Attribute Collections' do
   describe Arsenal::Attribute do
     let(:attribute) { Arsenal::Attribute.new(:foo, default: :baz) } 
+    let(:attribute_no_default) { Arsenal::Attribute.new(:quux) } 
 
     subject { attribute } 
 
     it { should respond_to :name }
-    it { should respond_to :default }
     it { should respond_to :value } 
 
-    describe '#foo' do
 
+
+    it { should respond_to :default }
+    its(:default) { should == :baz } 
+    
+    it { should respond_to :has_default? } 
+    describe '#has_default?' do 
+      context 'when the attribute sets a default value' do
+        subject { attribute }
+        it { should have_default } 
+      end
+
+      context 'when the attribute does not set a default value' do
+        subject { attribute_no_default }
+        it { should_not have_default } 
+      end
+    end
+
+    describe '#foo' do
       context '#value when the instance does not implement #foo' do
         subject { attribute.value(Class.new { }.new) } 
         it { should == :baz } 
@@ -23,7 +40,6 @@ describe 'Attributes and Attribute Collections' do
       end
     end
 
-    its(:default) { should == :baz } 
 
     pending 'drivers' do
       it { should respond_to :drivers }
