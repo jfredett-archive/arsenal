@@ -14,7 +14,36 @@ describe 'Attributes and Attribute Collections' do
     it { should respond_to :default }
     it { should respond_to :has_default? } 
 
+    context 'aliases' do
+      let(:attr_with_alias) { Arsenal::Attribute.new(:foo, method: :bar) } 
+      let(:attr_with_default) { Arsenal::Attribute.new(:foo, method: :bar, default: "fail") } 
+      let(:receiver) { receiver = double('instance') } 
 
+      before do
+        receiver.should_receive(:bar)
+        receiver.should_not_receive(:foo)
+      end
+
+      it 'allows me to override the method called with the `method` parameter' do
+        attr_with_alias.value(receiver)
+      end
+
+      it 'works even when the object has a default' do
+        attr_with_default.value(receiver)
+      end
+
+      it 'still returns the default if the receiver does not implement the method' do
+        receiver.stub(:respond_to?).with(:bar).and_return(:false)
+        attr_with_default.value(receiver)
+      end
+    end
+
+    describe '#required?' do
+      context 'a required attribute' do
+        subject { attribute_required }
+        it { should be_required }
+      end
+    end
 
     describe '#default' do
       its(:default) { should == :baz } 

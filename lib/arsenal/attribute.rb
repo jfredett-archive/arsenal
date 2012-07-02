@@ -3,8 +3,8 @@ module Arsenal
     attr_reader :name, :default
 
     def value(instance)
-      return @default unless instance.respond_to?(@name)
-      instance.send(@name)  
+      return @default unless instance.respond_to?(method) 
+      instance.send(method)  
     end
 
     def has_default?
@@ -17,8 +17,15 @@ module Arsenal
 
     def initialize(name, opts = {})
       @name = name
+      @method = opts[:method]
       @default = opts[:default]
       @required = opts[:required]
+    end
+
+    private 
+
+    def method 
+      method = @method || @name
     end
   end
 
