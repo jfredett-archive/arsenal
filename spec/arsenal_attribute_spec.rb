@@ -97,6 +97,7 @@ describe 'Attributes and Attribute Collections' do
     it { should respond_to :<<      }
     it { should respond_to :keys    }
     it { should respond_to :to_hash }
+    it { should respond_to :each    }
     describe '#==' do
       let(:collection_dup) { Arsenal::AttributeCollection.new([attr1, attr2, attr3]) }
       let(:collection_unordered) { Arsenal::AttributeCollection.new([attr2, attr3, attr1]) }
@@ -110,6 +111,19 @@ describe 'Attributes and Attribute Collections' do
       it { should_not == collection_superset } 
     end
 
+    describe '#each' do
+      let (:mock_attr) { double('test_attribute') } 
+      subject { Arsenal::AttributeCollection.new([mock_attr]) } 
+
+      its(:each) { should be_an Enumerator } 
+
+      it 'touches every attribute in the collection' do
+        mock_attr.should_receive(:test_message) 
+        subject.each do |attr|
+          attr.test_message      
+        end
+      end
+    end
     describe '#keys' do
       its(:keys) { should =~ [:fye, :foe, :fee] }
     end

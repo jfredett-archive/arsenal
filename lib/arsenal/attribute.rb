@@ -64,6 +64,10 @@ module Arsenal
         a[e.name] = e.value(obj)
       end
     end
+
+    def each(&block)
+      @attrs.each(&block)
+    end
     def ==(other)
       attrs = @attrs.dup
       other.each do |attr|
