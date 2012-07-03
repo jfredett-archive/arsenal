@@ -11,8 +11,9 @@ module Arsenal
       @default.present?
     end
 
-    def required? 
-      !!@required
+    def required?(value = nil)
+      return !!@required.call(value) if @required.respond_to?(:call)
+      return !!@required
     end
 
     def initialize(name, opts = {})

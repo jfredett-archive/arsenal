@@ -90,6 +90,14 @@ describe "The Arsenal Module" do
 
               attribute :bar
 
+              attribute :req1, :required => true
+              attribute :req2, :required => false
+
+              attribute :proc_calls_self, :required => proc { |t| t.test_message }
+
+              attribute :proc1, :required => proc { |t| true  }
+              attribute :proc2, :required => proc { |t| false }
+
               def foo
                 :thing 
               end
@@ -103,6 +111,32 @@ describe "The Arsenal Module" do
           it "optionally takes a default value, which is used by the nil-model to populate it's #attributes" do
             subject.foo.should == :thing
             nil_example.foo.should == :default_thing
+          end
+          describe ':required' do
+            context 'as a proc' do
+              it 'calls the proc with an instance of the class as the context.' do
+                subject.should_receive :test_message
+                Example.attributes[:proc_calls_self].required?(subject)
+              end
+
+              it 'is required if the proc returns true' do
+                Example.attributes[:proc1].required?(subject).should be_true
+              end
+
+              it 'is not required if the proc returns false' do
+                Example.attributes[:proc2].required?(subject).should be_false
+              end
+            end
+
+            context 'as a boolean' do
+              it 'is required if required is set' do
+                Example.attributes[:req1].should be_required
+              end
+
+              it 'is not required if required is unset' do
+                Example.attributes[:req2].should_not be_required
+              end
+            end
           end
         end
       end
