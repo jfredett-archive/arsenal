@@ -182,9 +182,7 @@ describe 'Attributes and Attribute Collections' do
       end
 
       it "throws an error if the class given doesn't adhere to the Attribute API" do
-        expect { 
-          collection << Class.new 
-        }.to raise_error ArgumentError
+        expect { collection << Class.new }.to raise_error ArgumentError
       end
     end
 
