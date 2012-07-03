@@ -50,6 +50,7 @@ module Arsenal
       @attrs << attr
       self
     end
+    alias push <<
 
     def [](key)
       @attrs.each do |a|
