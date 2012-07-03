@@ -40,10 +40,8 @@ module Arsenal
   end
 
   module ClassMethods
-    attr_reader :__identifier_method
-
     def id(method)
-      @__identifier_method = method.to_sym
+      attribute :id, method: method.to_sym, required: true 
     end
 
     def attribute(method, opts = {})
@@ -54,10 +52,14 @@ module Arsenal
       superclass_attrs = superclass.attributes if superclass.respond_to? :attributes
       @__attrs ||= AttributeCollection.new + superclass_attrs
     end
-    end
   end
 
   module InstanceMethods
+    def initialize
+      raise Arsenal::IdentifierNotGivenError unless id.present?
+      super
+    end
+
     def persisted? 
       false
     end
@@ -67,7 +69,7 @@ module Arsenal
     end
 
     def id
-      send(self.class.__identifier_method) 
+      attributes[:id] 
     end
 
     def attributes

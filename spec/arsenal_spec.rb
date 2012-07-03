@@ -63,6 +63,25 @@ describe "The Arsenal Module" do
         it { should respond_to :id }
         it { should respond_to :attribute } 
 
+        describe '#id' do
+          subject { Example.attributes[:id] } 
+
+          after { Object.send(:remove_const, :ErrorExample) rescue nil } 
+
+          it { should_not be_nil } 
+          it { should be_required }
+          it { should_not have_default } 
+
+          it 'causes an error when instantiating if it is not provided' do
+            expect { 
+              class ErrorExample
+                include Arsenal
+              end
+              ErrorExample.new
+            }.to raise_error Arsenal::IdentifierNotGivenError
+          end
+        end
+
         describe '#attribute' do
           before do
             class Example
