@@ -39,21 +39,21 @@ describe "The Arsenal Module" do
     }
 
     describe 'Generated classes' do
-    it "defines the Example::Repository class" do
-      "Example::Repository".should be_defined
-    end
+      it "defines the Example::Repository class" do
+        "Example::Repository".should be_defined
+      end
 
-    it "defines the Example::Nil class" do
-      "Example::Nil".should be_defined
-    end
+      it "defines the Example::Nil class" do
+        "Example::Nil".should be_defined
+      end
 
-    it "defines the Example::Persisted class" do
-      "Example::Persisted".should be_defined
-    end
+      it "defines the Example::Persisted class" do
+        "Example::Persisted".should be_defined
+      end
 
-    it "defines the Example::Collection class" do
-      "Example::Collection".should be_defined
-    end
+      it "defines the Example::Collection class" do
+        "Example::Collection".should be_defined
+      end
     end
 
     describe 'Example' do
@@ -143,10 +143,15 @@ describe "The Arsenal Module" do
               end
             end
           end
+
+          pending 'drivers' do
+            it 'optionally takes a list of drivers registered with this class in which to store the attribute' 
+          end
         end
       end
 
       context 'instance' do
+
         let(:example) { Example.new }
         subject { example } 
 
@@ -235,7 +240,7 @@ describe "The Arsenal Module" do
           attribute :foo, :default => :bar
           attribute :flurm, :default => :slurm
         end
-        
+
         class Example::Nil
           def flurm ; :thing ; end
         end
@@ -284,5 +289,4 @@ describe "The Arsenal Module" do
       it { should respond_to :destroy }
     end
   end
-
 end
