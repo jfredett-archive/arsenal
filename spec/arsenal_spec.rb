@@ -112,6 +112,11 @@ describe "The Arsenal Module" do
             subject.foo.should == :thing
             nil_example.foo.should == :default_thing
           end
+
+          it 'assumes that if no default is provided, the default is nil' do
+            subject.bar.should be_nil
+          end
+
           describe ':required' do
             context 'as a proc' do
               it 'calls the proc with an instance of the class as the context.' do
