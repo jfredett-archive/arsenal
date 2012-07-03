@@ -87,6 +87,7 @@ describe 'Attributes and Attribute Collections' do
     let(:attr1) { Arsenal::Attribute.new(:fee, default: :tweedle) }
     let(:attr2) { Arsenal::Attribute.new(:fye, default: :deedle)  }
     let(:attr3) { Arsenal::Attribute.new(:foe, default: :dum)     }
+    let(:attr4) { Arsenal::Attribute.new(:bla, default: :ralb)   }
 
     let(:collection) { Arsenal::AttributeCollection.new([attr1, attr2, attr3]) }
 
@@ -96,6 +97,18 @@ describe 'Attributes and Attribute Collections' do
     it { should respond_to :<<      }
     it { should respond_to :keys    }
     it { should respond_to :to_hash }
+    describe '#==' do
+      let(:collection_dup) { Arsenal::AttributeCollection.new([attr1, attr2, attr3]) }
+      let(:collection_unordered) { Arsenal::AttributeCollection.new([attr2, attr3, attr1]) }
+      let(:collection_diff) { Arsenal::AttributeCollection.new([attr1, attr2]) }
+      let(:collection_superset) { Arsenal::AttributeCollection.new([attr1, attr2, attr3, attr4]) }
+
+      it { should == collection_dup } 
+      it { should == collection_unordered } 
+
+      it { should_not == collection_diff } 
+      it { should_not == collection_superset } 
+    end
 
     describe '#keys' do
       its(:keys) { should =~ [:fye, :foe, :fee] }
