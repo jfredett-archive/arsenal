@@ -50,5 +50,11 @@ module Arsenal
       end
       nil
     end
+
+    def to_hash(obj)
+      @attrs.each.with_object({}) do |e,a|
+        a[e.name] = e.value(obj)
+      end
+    end
   end
 end

@@ -43,6 +43,11 @@ describe 'Attributes and Attribute Collections' do
         subject { attribute_required }
         it { should be_required }
       end
+
+      context 'an unrequired attribute' do
+        subject { attribute } 
+        it { should_not be_required }
+      end
     end
 
     describe '#default' do
@@ -87,12 +92,22 @@ describe 'Attributes and Attribute Collections' do
 
     subject { collection }
 
-    it { should respond_to :[]   }
-    it { should respond_to :<<   } 
-    it { should respond_to :keys } 
+    it { should respond_to :[]      }
+    it { should respond_to :<<      }
+    it { should respond_to :keys    }
+    it { should respond_to :to_hash }
 
     describe '#keys' do
       its(:keys) { should =~ [:fye, :foe, :fee] }
+    end
+
+    describe '#to_hash' do
+      let(:klass) { double('mock').stub(:fee => 1, :fye => 2, :foe => 3)  }
+      subject { collection.to_hash(klass) } 
+
+      it { should be_a Hash } 
+      its(:length) { should be 3 }
+      its(:keys) { should =~ [:fee, :fye, :foe] }
     end
 
     describe '#<<' do
