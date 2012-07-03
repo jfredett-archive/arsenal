@@ -102,8 +102,16 @@ describe "The Arsenal Module" do
         it { should respond_to :id }
 
         describe "#attributes" do
-          subject { example.attributes } 
-          its(:keys) { should include(:id) }
+          before do 
+            class Example
+              attribute :foo
+            end
+          end
+
+          subject    { example.attributes   }
+          its(:keys) { should include(:id)  }
+          its(:keys) { should include(:foo) }
+          its(:keys) { should =~ Example.attributes.keys }
         end
       end
     end

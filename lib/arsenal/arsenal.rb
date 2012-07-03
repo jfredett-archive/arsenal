@@ -46,8 +46,14 @@ module Arsenal
       @__identifier_method = method.to_sym
     end
 
-    def attribute
+    def attribute(method, opts = {})
+      attributes << Attribute.new(method, opts)
+    end
 
+    def attributes
+      superclass_attrs = superclass.attributes if superclass.respond_to? :attributes
+      @__attrs ||= AttributeCollection.new + superclass_attrs
+    end
     end
   end
 
@@ -65,7 +71,7 @@ module Arsenal
     end
 
     def attributes
-      { id: id }
+      self.class.attributes.to_hash(self)
     end
   end
 end
