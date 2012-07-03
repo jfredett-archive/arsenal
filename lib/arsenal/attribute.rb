@@ -22,6 +22,13 @@ module Arsenal
       @required = opts[:required]
     end
 
+    def to_s
+      first_part = "#{name} => #{method}" 
+      second_part = "(default: #{default})" if has_default?
+      [first_part, second_part].join(' ') 
+    end
+    alias inspect to_s
+
     private 
 
     def method 
