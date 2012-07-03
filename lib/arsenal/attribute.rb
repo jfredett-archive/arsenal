@@ -68,6 +68,16 @@ module Arsenal
     def each(&block)
       @attrs.each(&block)
     end
+
+    def +(other)
+      return self.dup if other.nil?
+
+      coll = AttributeCollection.new
+      each       { |attr| coll << attr } 
+      other.each { |attr| coll << attr } 
+      return coll
+    end
+
     def ==(other)
       attrs = @attrs.dup
       other.each do |attr|
@@ -76,5 +86,6 @@ module Arsenal
       end
       attrs.empty? 
     end
+
   end
 end

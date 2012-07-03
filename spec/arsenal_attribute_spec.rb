@@ -98,6 +98,8 @@ describe 'Attributes and Attribute Collections' do
     it { should respond_to :keys    }
     it { should respond_to :to_hash }
     it { should respond_to :each    }
+    it { should respond_to :+       }
+
     describe '#==' do
       let(:collection_dup) { Arsenal::AttributeCollection.new([attr1, attr2, attr3]) }
       let(:collection_unordered) { Arsenal::AttributeCollection.new([attr2, attr3, attr1]) }
@@ -124,6 +126,32 @@ describe 'Attributes and Attribute Collections' do
         end
       end
     end
+
+    describe '#+' do
+      let (:collection1) { Arsenal::AttributeCollection.new([attr1, attr2]) }
+      let (:collection2) { Arsenal::AttributeCollection.new([attr3])        }
+
+      context 'adding nil' do
+        subject { collection1 + nil } 
+
+        it { should == collection1 } 
+      end
+
+      context 'adding a collection' do
+
+        subject { collection1 + collection2 } 
+
+        it { should == collection } 
+      end
+      context 'adding a malformed collection' do
+        subject { collection1 + [double('malformed collection')] }
+       
+        it 'throws an argument error' do
+          expect { subject }.to raise_error ArgumentError
+        end
+      end
+    end
+
     describe '#keys' do
       its(:keys) { should =~ [:fye, :foe, :fee] }
     end
