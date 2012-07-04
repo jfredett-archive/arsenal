@@ -1,6 +1,5 @@
 require 'bundler/setup'
 
-require './initializers/initialize'
 require 'pry'
 
 RSpec.configure do |config|
