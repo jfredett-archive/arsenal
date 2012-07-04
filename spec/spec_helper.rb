@@ -2,6 +2,8 @@ require 'bundler/setup'
 
 require 'pry'
 
+require 'arsenal'
+
 RSpec.configure do |config|
   config.before do
     allow_message_expectations_on_nil #because we're making proper nullclasses.
