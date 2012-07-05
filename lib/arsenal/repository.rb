@@ -5,17 +5,14 @@ module Arsenal
   module Repository
     # todo: implement
     def save
-
     end
 
     # todo: implement
     def find
-
     end
 
     # todo: implement
     def destroy
-
     end
   end
 end
