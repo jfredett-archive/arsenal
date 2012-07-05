@@ -8,11 +8,6 @@ require 'singleton'
 module Arsenal
   extend ActiveSupport::Concern  
 
-  def self.create_nil_method!(base) 
-    Kernel.send(:define_method, "nil_#{base.to_s.downcase}") do
-      base::Nil.instance
-    end
-  end
 
   included do
     extend Forwardable
@@ -74,6 +69,14 @@ module Arsenal
 
     def attributes
       self.class.attributes.to_hash(self)
+    end
+  end
+
+  private 
+
+  def self.create_nil_method!(base) 
+    Kernel.send(:define_method, "nil_#{base.to_s.downcase}") do
+      base::Nil.instance
     end
   end
 end
