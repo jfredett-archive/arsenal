@@ -1,10 +1,22 @@
 source 'https://rubygems.org'
 
 
-gem 'rspec'
-gem 'pry'
-gem 'rake'
+group :testing do
+  gem 'rspec'
+  gem 'pry'
+  gem 'unroller'
+end
 
+group :development do
+  gem 'rake'
+end
+
+group :documentation do
+  gem 'rdoc'
+  gem 'yard'
+  gem 'kramdown'
+  gem 'yardstick'
+end
 
 # Specify your gem's dependencies in arsenal.gemspec
 gemspec
