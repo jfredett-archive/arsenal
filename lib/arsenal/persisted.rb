@@ -1,5 +1,5 @@
 module Arsenal
-  module PersistedMethods
+  module Persisted
     extend ActiveSupport::Concern
 
     module InstanceMethods

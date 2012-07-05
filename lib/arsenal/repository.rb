@@ -1,5 +1,5 @@
 module Arsenal
-  module RepositoryMethods
+  module Repository
     extend ActiveSupport::Concern
 
     module ClassMethods

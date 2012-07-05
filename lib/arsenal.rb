@@ -15,20 +15,20 @@ module Arsenal
     base = self
 
     base::Repository = Class.new do
-      include Arsenal::RepositoryMethods
+      include Arsenal::Repository
     end
 
     base::Nil = Class.new do
-      include Arsenal::NilMethods
+      include Arsenal::Nil
     end
     base::Nil.nil_model = base
 
     base::Persisted = Class.new(base) do
-      include Arsenal::PersistedMethods
+      include Arsenal::Persisted
     end
 
     base::Collection = Class.new(Array) do
-      include Arsenal::CollectionMethods
+      include Arsenal::Collection
     end
 
     Arsenal.create_nil_method!(base)

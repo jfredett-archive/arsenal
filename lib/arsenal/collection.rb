@@ -1,5 +1,5 @@
 module Arsenal
-  module CollectionMethods
+  module Collection
     extend ActiveSupport::Concern
 
     module InstanceMethods

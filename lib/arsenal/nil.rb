@@ -1,5 +1,5 @@
 module Arsenal
-  module NilMethods
+  module Nil
     extend ActiveSupport::Concern
 
     included do
