@@ -46,7 +46,7 @@ patched_, so rip them open and add more methods.
 
 There are presently 5 classes that matter when talking about an Arsenal Model:
 
-1. The original including class
+### The original including class
 
 This class represents a model not-yet-persisted to the database(s) it is backed
 by. In this class, you add attributes to track via the `attribute` macro. You
@@ -60,13 +60,13 @@ pre-instantiation error checking you like.
 Arsenal does _not_ invade your model with lots of methods, in fact, it only
 provides a very few, which you can find in the API documentation.
 
-2. The ::Persisted class
+### The ::Persisted class
 
 This class is namespaced beneath your original including class (henceforth: the
 model). It represents a model already persisted in the database. It too can have
 methods loaded on it freely. 
 
-3. The ::Nil class
+###The ::Nil class
 
 This class represents the absence of a model. It's what you get when the
 Repository can't find a class matching your conditions, or generally any
@@ -85,13 +85,13 @@ as a collection, which is useful for iterating over in a view, since you can
 always just `#each` over the result of a `#find` and count on the same interface
 being provided across all the models. 
 
-4. The ::Collection class
+### The ::Collection class
 
 This class contains collections of the previous three classes. It's a subclass
 of Array, so you can treat it exactly like that. The Repository finders will
 always return this or a Model::Nil class
 
-5. The ::Repository class
+### The ::Repository class
 
 This is the class responsible for managing the saving, updating, destroying, and
 finding of model instances in the given databases associated with the model.
