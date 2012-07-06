@@ -1,0 +1,7 @@
+ --no-private
+ --embed-mixin ClassMethods
+ --embed-mixin InstanceMethods
+ - 
+ README
+ LICENSE
+
