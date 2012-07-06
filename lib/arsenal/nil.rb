@@ -19,7 +19,7 @@ module Arsenal
       end
 
       def method_missing(method, *args, &block) 
-        super if respond_to? method
+        return super if respond_to? method
 
         if attr = nil_model.attributes[method]
           return attr.default
