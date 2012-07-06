@@ -14,7 +14,7 @@ module Arsenal
     base = self
 
     base::Repository = Class.new do
-      include Arsenal::Repository
+      extend Arsenal::Repository
     end
 
     base::Nil = Class.new do

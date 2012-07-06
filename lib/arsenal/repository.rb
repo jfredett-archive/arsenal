@@ -1,19 +1,15 @@
 module Arsenal
   module Repository
-    extend ActiveSupport::Concern
+    def save
 
-    module ClassMethods
-      def save
+    end
 
-      end
+    def find
 
-      def find
+    end
 
-      end
+    def destroy
 
-      def destroy
-
-      end
     end
   end
 end
