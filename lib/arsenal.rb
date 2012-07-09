@@ -5,6 +5,9 @@ require 'initializer'
 
 require 'singleton'
 
+# Arsenal is a Repository-pattern focused ORM which supports lightweight
+# database drivers and polyglot persistence-by-default. It is unobtrusive,
+# module based, and easy to use.
 module Arsenal
   extend ActiveSupport::Concern  
 
