@@ -41,10 +41,12 @@ module Arsenal
     end
   end
 
+  # @private
   module ClassMethods
     include Arsenal::Macros
   end
 
+  # @private
   module InstanceMethods
     include Arsenal::Model
   end
