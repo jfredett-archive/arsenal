@@ -38,6 +38,7 @@ module Arsenal
 
   private 
 
+  #@private
   def self.create_nil_method!(base) 
     Kernel.send(:define_method, "nil_#{base.to_s.downcase}") do
       base::Nil.instance

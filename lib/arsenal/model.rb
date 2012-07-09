@@ -47,7 +47,7 @@ module Arsenal
     # A hash of all the attributes and their values associated with this model
     #
     # @return [Hash] All the attributes and their associated values for the
-    # model instance
+    #  model instance
     def attributes
       self.class.attributes.to_hash(self)
     end

@@ -34,7 +34,7 @@ module Arsenal
     # @todo: Implement
     #
     # @return [Hash] All the attributes and their associated values for the
-    # model instance
+    #  model instance
     def attributes ; {id: nil}    ; end
 
    
@@ -51,6 +51,7 @@ module Arsenal
 
     private 
 
+    # @private
     def nil_model
       self.class.nil_model
     end

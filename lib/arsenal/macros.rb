@@ -1,10 +1,10 @@
 module Arsenal
   # The Macros module contains class macros for an Arsenal Model.
   module Macros 
-    # Sets a primary key in the class
+    # Sets a primary key for the model
     #
     # @param method [Symbol] the name of the method that will act as a primary
-    # key for the model.
+    #  key for the model.
     def id(method)
       attribute :id, method: method.to_sym, required: true 
     end

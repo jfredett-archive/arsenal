@@ -19,7 +19,7 @@ module Arsenal
     # @see Arsenal::Collection Arsenal::Model#savable?
     #
     # @return [Boolean] true if all the elements assert `#savable?`, false
-    # otherwise
+    #  otherwise
     def savable?
       all_savable?
     end
@@ -30,8 +30,8 @@ module Arsenal
     # @see Arsenal::Nil Arsenal::Nil#persisted?
     # @see Arsenal::Collection Arsenal::Model#persisted?
     #
-    # @return [Boolean] true if all the elements assert `#savable?`, false
-    # otherwise
+    # @return [Boolean] true if all the elements assert `#persisted?`, false
+    #  otherwise
     def persisted?
       all_persisted?
     end

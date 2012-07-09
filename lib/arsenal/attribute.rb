@@ -34,10 +34,10 @@ module Arsenal
       return !!@required
     end
 
-    # Create a new attribute see {Arsenal::Macros#attribute? Arsenal::Macros#attribute?}
+    # Create a new attribute see {Arsenal::Macros Arsenal::Macros#attribute?}
     # for details on the available options
     #
-    # @todo: relocate option docs to here.
+    # @todo relocate option docs to here.
     #
     # @param name [Symbol] the name of the method which should be populated by 
     #  the attribute.
@@ -61,6 +61,7 @@ module Arsenal
 
     private 
 
+    # @private
     def method 
       method = @method || @name
     end
