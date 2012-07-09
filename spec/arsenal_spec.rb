@@ -164,6 +164,9 @@ describe "The Arsenal Module" do
         it { should respond_to :attributes } 
         it { should respond_to :id }
 
+        it { should respond_to :nil? }
+        it { should_not be_nil } 
+
         describe "#attributes" do
           before do 
             class Example
@@ -194,6 +197,9 @@ describe "The Arsenal Module" do
 
         it { should respond_to :savable? }
         it { should be_savable } 
+
+        it { should respond_to :nil? }
+        it { should_not be_nil }
       end
     end
 
