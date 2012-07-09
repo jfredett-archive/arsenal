@@ -2,11 +2,14 @@ require 'spec_helper'
 
 describe "The Arsenal Module" do
   subject { Arsenal } 
-
-  before { class Example ; end }
   after { Object.send(:remove_const, :Example) }
 
   context "before it's included" do
+    before do
+      class Example 
+      end
+    end
+
     it "hasn't yet defined the Example::Repository class" do
       "Example::Repository".should be_undefined
     end
@@ -25,8 +28,7 @@ describe "The Arsenal Module" do
   end
 
   context "after it's included" do
-
-    before { 
+    before do
       class Example
         include Arsenal 
         id :identifier
@@ -36,31 +38,22 @@ describe "The Arsenal Module" do
           $identifier_number += 1
         end
       end 
-    }
-
-    describe 'Generated classes' do
-      it "defines the Example::Repository class" do
-        "Example::Repository".should be_defined
-      end
-
-      it "defines the Example::Nil class" do
-        "Example::Nil".should be_defined
-      end
-
-      it "defines the Example::Persisted class" do
-        "Example::Persisted".should be_defined
-      end
-
-      it "defines the Example::Collection class" do
-        "Example::Collection".should be_defined
-      end
     end
-    describe 'Example::Repository' do
-      subject { Example::Repository } 
 
-      it { should respond_to :save }
-      it { should respond_to :find }
-      it { should respond_to :destroy }
+    it "defines the Example::Repository class" do
+      "Example::Repository".should be_defined
+    end
+
+    it "defines the Example::Nil class" do
+      "Example::Nil".should be_defined
+    end
+
+    it "defines the Example::Persisted class" do
+      "Example::Persisted".should be_defined
+    end
+
+    it "defines the Example::Collection class" do
+      "Example::Collection".should be_defined
     end
   end
 end
