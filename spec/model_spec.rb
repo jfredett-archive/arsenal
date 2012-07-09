@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Example' do
-  before { 
+  before do 
     class Example
       include Arsenal 
       id :identifier
@@ -11,7 +11,7 @@ describe 'Example' do
         $identifier_number += 1
       end
     end 
-  }
+  end
   after { Object.send(:remove_const, :Example) }
 
   context 'class' do
@@ -34,8 +34,8 @@ describe 'Example' do
         expect { 
           class ErrorExample
             include Arsenal
-          end
-          ErrorExample.new
+        end
+        ErrorExample.new
         }.to raise_error Arsenal::IdentifierNotGivenError
       end
     end
@@ -138,5 +138,5 @@ describe 'Example' do
       its(:keys) { should =~ Example.attributes.keys }
     end
   end
-    end
+end
 

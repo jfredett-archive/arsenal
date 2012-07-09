@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Example::Nil', 'instance' do
-  before { 
+  before do
     class Example
       include Arsenal 
       id :identifier
@@ -18,7 +18,7 @@ describe 'Example::Nil', 'instance' do
     class Example::Nil
       def flurm ; :thing ; end
     end
-  }
+  end
   after { Object.send(:remove_const, :Example) }
 
 

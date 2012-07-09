@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Example::Persisted' do
-  before { 
+  before do
     class Example
       include Arsenal 
       id :identifier
@@ -11,7 +11,7 @@ describe 'Example::Persisted' do
         $identifier_number += 1
       end
     end 
-  }
+  end
   after { Object.send(:remove_const, :Example) }
 
   context 'class' do
