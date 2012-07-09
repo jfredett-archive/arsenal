@@ -7,10 +7,6 @@ module Arsenal
 
     def attributes ; {id: nil}    ; end
 
-    def nil_model
-      self.class.nil_model
-    end
-
     def method_missing(method, *args, &block) 
       return super if respond_to? method
 
@@ -20,12 +16,17 @@ module Arsenal
 
       super
     end
+
+    private 
+
+    def nil_model
+      self.class.nil_model
+    end
   end
 
   module NilMacros
     attr_accessor :nil_model
   end
-
 
   # @private
   module Nil
