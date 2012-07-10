@@ -1,8 +1,6 @@
 require 'spec_helper'
 describe Arsenal::Attribute do
   let(:attribute) { Arsenal::Attribute.new(:foo, default: :baz) } 
-  let(:attribute_no_default) { Arsenal::Attribute.new(:quux) } 
-  let(:attribute_required) { Arsenal::Attribute.new(:chex, required: true) } 
 
   subject { attribute } 
 
@@ -37,13 +35,13 @@ describe Arsenal::Attribute do
   end
 
   describe '#required?' do
+
     context 'a required attribute' do
-      subject { attribute_required }
+      subject { Arsenal::Attribute.new(:chex, required: true) } 
       it { should be_required }
     end
 
     context 'an unrequired attribute' do
-      subject { attribute } 
       it { should_not be_required }
     end
   end
@@ -53,12 +51,11 @@ describe Arsenal::Attribute do
 
     describe '#has_default?' do 
       context 'when the attribute sets a default value' do
-        subject { attribute }
         it { should have_default } 
       end
 
       context 'when the attribute does not set a default value' do
-        subject { attribute_no_default }
+        subject { Arsenal::Attribute.new(:quux) } 
         it { should_not have_default } 
       end
     end
