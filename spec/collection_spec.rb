@@ -15,39 +15,17 @@ describe 'Example::Collection' do
   after { Object.send(:remove_const, :Example) }
 
   context 'instance' do 
-
     subject { Example::Collection.new([Example.new, Example.new, Example::Persisted.new, nil_example]) }
 
     it { should respond_to :each } 
 
-    it "delegates calls it doesn't understand to it's elements" do
-      subject.each { |e| e.should_receive(:foo) } 
-      subject.foo
-    end
+    it { should delegate(:a_method).to_each.when_sent(:a_method) } 
 
-    it "takes methods of the form #any_<predicate>? and turns them into a .any? call" do
-      subject.each { |e| e.should_receive(:predicate?).at_most(:once) } 
-      subject.should_receive(:any?)
-      subject.any_predicate?
-    end
+    it { should delegate(:predicate?).to_each.and_aggregate_with(:all?).when_sent(:all_predicate?) }
+    it { should delegate(:predicate?).to_each.and_aggregate_with(:any?).when_sent(:any_predicate?) }
 
-    it "takes methods of the form #all_<predicate>? and turns them into a .all? call" do
-      subject.each { |e| e.should_receive(:predicate?).at_most(:once) } 
-      subject.should_receive(:all?)
-      subject.all_predicate?
-    end
-
-    it "aliases #savable? to #all_savable?" do
-      subject.each { |e| e.should_receive(:savable?).at_most(:once) } 
-      subject.should_receive(:all?)
-      subject.savable?
-    end
-
-    it "aliases #persisted? to #all_persisted?" do
-      subject.each { |e| e.should_receive(:persisted?).at_most(:once) } 
-      subject.should_receive(:all?)
-      subject.savable?
-    end
+    it { should delegate(:savable?)  .to_each.and_aggregate_with(:all?).when_sent(:savable?)   }
+    it { should delegate(:persisted?).to_each.and_aggregate_with(:all?).when_sent(:persisted?) }
   end
 end
 
