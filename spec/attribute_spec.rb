@@ -35,7 +35,6 @@ describe Arsenal::Attribute do
   end
 
   describe '#required?' do
-
     context 'a required attribute' do
       subject { Arsenal::Attribute.new(:chex, required: true) } 
       it { should be_required }

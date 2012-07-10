@@ -10,7 +10,7 @@ describe 'Example::Repository' do
         $identifier_number ||= 0
         $identifier_number += 1
       end
-  end 
+    end 
   end 
   after { Object.send(:remove_const, :Example) }
   subject { Example::Repository } 
