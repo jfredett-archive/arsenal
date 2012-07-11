@@ -9,6 +9,7 @@ describe Arsenal::Attribute do
   it { should respond_to :required? } 
   it { should respond_to :default }
   it { should respond_to :has_default? } 
+  it { should respond_to :driver }
 
   context 'aliases' do
     let(:attr_with_alias) { Arsenal::Attribute.new(:foo, method: :bar) } 
@@ -72,7 +73,20 @@ describe Arsenal::Attribute do
     end
   end
 
-  pending 'drivers' do
-    it { should respond_to :drivers }
+  # this will eventually be replaced with 'strategy'
+  context 'driver' do
+    let(:attr_driver) { Arsenal::Attribute.new(:attr_driver, :driver => :some_driver) } 
+    subject { attr_driver } 
+
+    context 'naming a specific driver' do
+      subject { attr_driver.driver }  
+      
+      pending "implementation of drivers" do
+        #driver api
+        subject { should respond_to :write } 
+        subject { should respond_to :delete }
+        subject { should respond_to :find } 
+      end
+    end
   end
 end

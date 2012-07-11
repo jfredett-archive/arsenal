@@ -3,7 +3,7 @@ module Arsenal
   #
   # @see Arsenal::Model
   class Attribute
-    attr_reader :name, :default
+    attr_reader :name, :default, :driver
 
     # Given a model instance, determine the value of this attribute
     #
@@ -49,6 +49,7 @@ module Arsenal
       @method = opts[:method]
       @default = opts[:default]
       @required = opts[:required]
+      @driver = opts[:driver]
     end
 
     # @private
