@@ -4,6 +4,8 @@ module Arsenal
   #
   # @see Arsenal::Attribute
   class AttributeCollection
+    include Enumerable
+
     # Create a new collection of attributes
     #
     # @param arr [Array] a list of attributes

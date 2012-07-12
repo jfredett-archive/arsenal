@@ -17,6 +17,8 @@ describe Arsenal::AttributeCollection do
   it { should respond_to :each    }
   it { should respond_to :+       }
 
+  it { should be_an Enumerable } 
+
   describe '#==' do
     let(:collection_dup) { Arsenal::AttributeCollection.new([attr1, attr2, attr3]) }
     let(:collection_unordered) { Arsenal::AttributeCollection.new([attr2, attr3, attr1]) }
