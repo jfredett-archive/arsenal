@@ -113,6 +113,7 @@ describe 'Example' do
       class Example
         attribute :flibble, :driver => :some_driver
         attribute :flobble, :driver => :some_driver
+        attribute :weeble, :driver => :some_other_driver
       end
     end
 
@@ -132,6 +133,7 @@ describe 'Example' do
     it { should_not be_nil } 
 
     it { should respond_to :drivers } 
+    it { should respond_to :attributes_for } 
     
     describe '#drivers' do
       subject { example.drivers } 
@@ -158,6 +160,12 @@ describe 'Example' do
       its(:keys) { should include(:id)  }
       its(:keys) { should include(:foo) }
       its(:keys) { should =~ Example.attributes.keys }
+    end
+
+    describe '#attributes_for' do
+      subject { example.attributes_for(:some_driver) } 
+      its(:keys) { should =~ [:id, :flibble, :flobble] } 
+
     end
   end
 end

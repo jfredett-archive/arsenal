@@ -60,6 +60,10 @@ module Arsenal
       full_attributes.map(&:driver).uniq.reject(&:nil?)
     end
 
+    def attributes_for(driver)
+      AttributeCollection.new(full_attributes.select { |a| a.driver == driver || a.name == :id }).to_hash(self)
+    end
+
     private 
 
     # Get the AttributeCollection of attributes for this model
