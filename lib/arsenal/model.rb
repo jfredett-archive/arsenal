@@ -49,7 +49,16 @@ module Arsenal
     # @return [Hash] All the attributes and their associated values for the
     #  model instance
     def attributes
-      self.class.attributes.to_hash(self)
+      full_attributes.to_hash(self)
+    end
+    private 
+
+    # Get the AttributeCollection of attributes for this model
+    #
+    # @return [Arsenal::AttributeCollection] the collection of attributes for
+    #  the model.
+    def full_attributes 
+      self.class.attributes
     end
   end
 end
