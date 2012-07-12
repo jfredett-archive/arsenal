@@ -34,8 +34,8 @@ describe 'Example' do
         expect { 
           class ErrorExample
             include Arsenal
-        end
-        ErrorExample.new
+          end
+          ErrorExample.new
         }.to raise_error Arsenal::IdentifierNotGivenError
       end
     end
