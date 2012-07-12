@@ -51,6 +51,11 @@ module Arsenal
     def attributes
       full_attributes.to_hash(self)
     end
+
+    def drivers
+      full_attributes.map(&:driver)
+    end
+
     private 
 
     # Get the AttributeCollection of attributes for this model

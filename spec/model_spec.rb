@@ -109,6 +109,12 @@ describe 'Example' do
   end
 
   context 'instance' do
+    before do
+      class Example
+        attribute :flibble, :driver => :some_driver
+        attribute :flobble, :driver => :some_driver
+      end
+    end
 
     let(:example) { Example.new }
     subject { example } 
@@ -124,6 +130,22 @@ describe 'Example' do
 
     it { should respond_to :nil? }
     it { should_not be_nil } 
+
+    it { should respond_to :drivers } 
+    
+    describe '#drivers' do
+      subject { example.drivers } 
+
+      it { should_not be_nil } 
+      it { should respond_to :each } 
+      it { should be_an Enumerable } 
+
+      it { should =~ [:some_driver, :some_other_driver] } 
+
+      it 'does not contain nils' do
+        subject.all? { |e| e.should_not be_nil } 
+      end
+    end
 
     describe "#attributes" do
       before do 
