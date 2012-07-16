@@ -15,7 +15,7 @@ module Arsenal
     # @return [Boolean] true if the save was 100% successful, false otherwise.
     def save(model)
       return false         unless model.savable?
-      return update(model) if model.persisted?
+      return update(model) if     model.persisted?
       return write(model) 
     end
 
