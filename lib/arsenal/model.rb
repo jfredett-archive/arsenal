@@ -60,6 +60,12 @@ module Arsenal
       full_attributes.map(&:driver).uniq.reject(&:nil?)
     end
 
+    # Returns an {Arsenal::AttributeCollection} of all the attributes are to be
+    # serialized to the given driver.
+    #
+    # @param driver [Arsenal::Driver] the driver to retrieve the attributes for
+    #
+    # @return [Hash] A hash of attribute name and associated value
     def attributes_for(driver)
       AttributeCollection.new(full_attributes.select { |a| a.driver == driver || a.name == :id }).to_hash(self)
     end
