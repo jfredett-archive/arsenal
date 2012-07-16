@@ -52,8 +52,12 @@ module Arsenal
       full_attributes.to_hash(self)
     end
 
+    # Returns the list of all drivers the model's attributes use
+    #
+    # @return [Array<Symbol>] The list of the names of all the drivers used by
+    #  the attributes.
     def drivers
-      full_attributes.map(&:driver)
+      full_attributes.map(&:driver).uniq.reject(&:nil?)
     end
 
     private 
