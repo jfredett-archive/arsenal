@@ -86,7 +86,12 @@ describe 'Example::Repository' do
     end
 
     context "saving a NilExample" do
-      it "does nothing"
+      it "does nothing" do
+        fake1_driver.should_not_receive(:write)
+        fake2_driver.should_not_receive(:write)
+        Example::Repository.save(nil_example)
+      end
+
       it "returns false" do
         Example::Repository.save(nil_example).should be_false
       end
