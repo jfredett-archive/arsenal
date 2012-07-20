@@ -19,6 +19,9 @@ describe 'Example::Collection' do
 
     it { should respond_to :each } 
 
+    it { should respond_to :collection? }
+    it { should be_a_collection } 
+
     it { should delegate(:a_method).to_each.when_sent(:a_method) } 
 
     it { should delegate(:predicate?).to_each.and_aggregate_with(:all?).when_sent(:all_predicate?) }

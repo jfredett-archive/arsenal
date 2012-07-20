@@ -126,6 +126,9 @@ describe 'Example' do
     it { should respond_to :savable? }
     it { should be_savable } 
 
+    it { should respond_to :collection? } 
+    it { should_not be_a_collection } 
+
     it { should respond_to :attributes } 
     it { should respond_to :id }
 

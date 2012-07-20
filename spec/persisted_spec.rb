@@ -26,6 +26,9 @@ describe 'Example::Persisted' do
     it { should respond_to :persisted? }
     it { should be_persisted }
 
+    it { should respond_to :collection? } 
+    it { should_not be_a_collection } 
+
     it { should respond_to :savable? }
     it { should be_savable } 
 

@@ -12,6 +12,8 @@ module Arsenal
     # @return [Boolean] always true
     def nil?       ; true  ; end
 
+    def collection? ; false ; end
+
     # This model is never persisted
     #
     # @return [Boolean] always false

@@ -36,6 +36,13 @@ module Arsenal
       all_persisted?
     end
 
+    # The model is a collection of other models
+    #
+    # @return [Boolean] always true
+    def collection? 
+      true
+    end
+
     # @private
     def method_missing(method, *args, &block)
       super if respond_to? method 

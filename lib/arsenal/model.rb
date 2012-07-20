@@ -60,6 +60,13 @@ module Arsenal
       full_attributes.map(&:driver).uniq.reject(&:nil?)
     end
 
+    # The model is not a collection of other models
+    #
+    # @return [Boolean] always false
+    def collection? 
+      false
+    end
+
     # Returns an {Arsenal::AttributeCollection} of all the attributes are to be
     # serialized to the given driver.
     #

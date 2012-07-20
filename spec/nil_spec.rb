@@ -28,6 +28,9 @@ describe 'Example::Nil', 'instance' do
   it { should be_nil } 
   it { should be_a Singleton } 
 
+  it { should respond_to :collection? } 
+  it { should_not be_a_collection } 
+
   it { should respond_to :persisted? }
   it { should_not be_persisted }
 
