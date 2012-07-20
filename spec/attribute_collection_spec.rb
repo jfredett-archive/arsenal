@@ -16,6 +16,7 @@ describe Arsenal::AttributeCollection do
   it { should respond_to :to_hash }
   it { should respond_to :each    }
   it { should respond_to :+       }
+  it { should respond_to :for     }
 
   it { should be_an Enumerable } 
 
@@ -43,6 +44,32 @@ describe Arsenal::AttributeCollection do
       subject.each do |attr|
         attr.test_message      
       end
+    end
+  end
+
+  describe '#select' do
+    subject { collection.select { true } }
+    it { should be_a Arsenal::AttributeCollection } 
+  end
+
+  describe '#for' do
+    let (:driver1) { double('driver1') } 
+    let (:driver2) { double('driver2') } 
+    let (:attr_d1) { double('test1_attribute') } 
+    let (:attr_d2) { double('test2_attribute') } 
+    let (:attr_id) { double('id_attribute') } 
+
+    before do
+      attr_d1.stub(:name => :foo, :driver => driver1)
+      attr_d2.stub(:name => :bar, :driver => driver2)
+      attr_id.stub(:name => :id, :driver => nil)
+    end
+
+    subject { Arsenal::AttributeCollection.new([attr_d1, attr_d2]).for(driver1) } 
+
+    it { should be_a Arsenal::AttributeCollection } 
+    it 'returns all the attributes with the given driver and the :id attribute' do
+      subject.should be_all { |a| a.driver == driver1 || a.name == :id } 
     end
   end
 

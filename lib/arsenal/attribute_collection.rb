@@ -73,9 +73,24 @@ module Arsenal
       super
     end
 
+    # Wraps the [Set] implementation of #select to return a AttributeCollection
+    def select
+      AttributeCollection.new(super)
+    end
+
+
+    # Returns all the attribues which serialize to a given driver.
+    #
+    # @param driver [Arsenal::Driver] the driver object for which we will return
+    # attributes
+    #
+    # @return [Arsenal::AttributeCollection] the set of attributes which use the
+    # given driver
+    #
+    # @todo Presently, there is no {Arsenal::Driver} class, so this
+    # documentation is a lie.
     def for(driver)
-      self
-      #AttributeCollection.new(@attrs.select { |a| a.driver == driver || a.name == :id })
+      select { |a| a.name == :id || a.driver == driver }
     end
 
     private 
