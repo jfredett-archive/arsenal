@@ -5,7 +5,7 @@ describe "The Arsenal Module" do
   after { Object.send(:remove_const, :Example) rescue nil }
 
   it { should respond_to :collection_for } 
-
+  it { should respond_to :persisted_for } 
 
   context "before it's included" do
     before do
@@ -31,6 +31,11 @@ describe "The Arsenal Module" do
 
     describe '#collection_for' do
       subject { Arsenal.collection_for(Example) }
+      it { should be_nil }
+    end
+
+    describe '#persisted_for' do
+      subject { Arsenal.persisted_for(Example) }
       it { should be_nil }
     end
   end
@@ -67,6 +72,11 @@ describe "The Arsenal Module" do
     describe "#collection_for" do
       subject { Arsenal.collection_for(Example) }
       it { should be Example::Collection }
+    end
+
+    describe "#persisted_for" do
+      subject { Arsenal.persisted_for(Example) }
+      it { should be Example::Persisted }
     end
   end
 end

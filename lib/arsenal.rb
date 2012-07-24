@@ -43,11 +43,26 @@ module Arsenal
   #
   # @return [Arsenal::Collection] the collection class for the model
   def self.collection_for(model)
-    return unless have_model?(model)
-    registry[model][:collection] 
+    retrieve_class(model, :collection)
+  end
+
+  # The persisted model for a given arsenal model
+  #
+  # @param model [Arsenal::Model] the model to retrieve the persisted class for
+  #
+  # @return [Arsenal::Collection] the persisted class for the model
+  def self.persisted_for(model)
+    retrieve_class(model, :persisted)
   end
 
   private 
+
+  #@private
+  def self.retrieve_class(model, klass)
+    model = model.class unless model.is_a?(Class)
+    return unless have_model?(model)
+    registry[model][klass] 
+  end
 
   # Check if there has been an Arsenal Model created for the given model.
   #
