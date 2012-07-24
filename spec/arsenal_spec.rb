@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe "The Arsenal Module" do
   subject { Arsenal } 
-  after { Object.send(:remove_const, :Example) }
+  after { Object.send(:remove_const, :Example) rescue nil }
+
+  it { should respond_to :collection_for } 
+
 
   context "before it's included" do
     before do
@@ -24,6 +27,11 @@ describe "The Arsenal Module" do
 
     it "hasn't yet defined the Example::Collection class" do
       "Example::Collection".should be_undefined
+    end
+
+    describe '#collection_for' do
+      subject { Arsenal.collection_for(Example) }
+      it { should be_nil }
     end
   end
 
@@ -54,6 +62,11 @@ describe "The Arsenal Module" do
 
     it "defines the Example::Collection class" do
       "Example::Collection".should be_defined
+    end
+
+    describe "#collection_for" do
+      subject { Arsenal.collection_for(Example) }
+      it { should be Example::Collection }
     end
   end
 end

@@ -34,9 +34,51 @@ module Arsenal
     end
 
     Arsenal.create_nil_method!(base)
+    Arsenal.register!(base)  
+  end
+
+  # The collection model for a given arsenal model
+  #
+  # @param model [Arsenal::Model] the model to retrieve the collection class for
+  #
+  # @return [Arsenal::Collection] the collection class for the model
+  def self.collection_for(model)
+    return unless have_model?(model)
+    registry[model][:collection] 
   end
 
   private 
+
+  # Check if there has been an Arsenal Model created for the given model.
+  #
+  # @param model [Class] the model to check
+  #
+  # @return true if Arsenal has wired up the given class as an Arsenal Model
+  def self.have_model?(model)
+    registry.has_key?(model)
+  end
+
+  # register a new class as having been wired up by arsenal as an Arsenal Model
+  #
+  # @param model [Class] the model class to register
+  def self.register!(model)
+    registry[model] = { 
+           model: model,
+             nil: model::Nil,
+       persisted: model::Persisted,
+      collection: model::Collection,
+      repository: model::Repository
+    }
+    nil
+  end
+
+  # the hash of all models which are wired up as arsenal models, and references
+  # to each of their arsenal-defined classes (including the model itself)
+  #
+  # @return [Hash] all of the Arsenal Models and their Arsenal-defined classes
+  def self.registry
+    @registry ||= {}
+  end
 
   #@private
   def self.create_nil_method!(base) 
