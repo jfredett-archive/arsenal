@@ -5,7 +5,7 @@ describe 'Example' do
     class Example
       include Arsenal 
       id :identifier
-
+      
       def identifier
         $identifier_number ||= 0
         $identifier_number += 1
@@ -111,6 +111,8 @@ describe 'Example' do
   context 'instance' do
     before do
       class Example
+
+
         attribute :flibble, :driver => :some_driver
         attribute :flobble, :driver => :some_driver
         attribute :weeble, :driver => :some_other_driver
@@ -168,8 +170,36 @@ describe 'Example' do
     describe '#attributes_for' do
       subject { example.attributes_for(:some_driver) } 
       its(:keys) { should =~ [:id, :flibble, :flobble] } 
-
     end
   end
+
+  context 'building a new example from a hash of attributes' do
+    before do
+      class Example
+        attribute :foo
+        attribute :bar
+
+        def build(attrs)
+          @foo = attrs[:foo]
+          @bar = "this is #{attrs[:bar]}"
+        end
+
+        attr_reader :foo, :bar
+      end
+    end
+
+    subject { Example } 
+
+    it '.new should take at least one parameter, the hash of attributes' do
+      expect { subject.new(foo: 1, bar: 2) }.to_not raise_error ArgumentError
+    end
+
+    it 'otherwise leaves the implementation up to the user' do
+      obj = subject.new(foo: 1, bar: 2)
+      obj.foo.should == 1
+      obj.bar.should == "this is 2"
+    end
+  end
+
 end
 

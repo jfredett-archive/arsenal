@@ -7,11 +7,24 @@ module Arsenal
     # that we can always persist and retrieve these objects, since we need a
     # primary key to do so.
     #
+    # Further, it calls the instance method #build with the hash of attributes
+    # as it's argument. This must be overridden by the user to load those
+    # attributes into the model as they see fit.
+    #
+    # @param attrs [Hash] the attributes to be assigned to this instance of the
+    #   model.
+    #
     # @see Arsenal::IdentifierNotGivenError
-    def initialize
+    # @see Arsenal::Model #build
+    def initialize(attrs = {})
       raise Arsenal::IdentifierNotGivenError unless id.present?
-      super
+      build(attrs)
+      # Finally, it calls the parent initialization method with no arguments
+      # ideally, this would be part of the normal #initialize method, but ruby
+      # is a bit finicky around this bit.
+      super()
     end
+  
 
     # Indicates whether the given model is persisted to the datastores.
     #
@@ -74,10 +87,21 @@ module Arsenal
     #
     # @return [Hash] A hash of attribute name and associated value
     def attributes_for(driver)
-      AttributeCollection.new(full_attributes.select { |a| a.driver == driver || a.name == :id }).to_hash(self)
+      AttributeCollection.new(
+        full_attributes.select { |a| a.driver == driver || a.name == :id }
+      ).to_hash(self)
     end
 
     private 
+
+    # This method should be overridden. It allows you to set all of the
+    # attributes of your model at initialization time.
+    #
+    # @param attrs [Hash] the attributes to be assigned to this instance of the
+    #   model.
+    def build(attrs)
+      # Implement #build 
+    end
 
     # Get the AttributeCollection of attributes for this model
     #
