@@ -35,7 +35,12 @@ module Arsenal
 
     Arsenal.create_nil_method!(base)
     Arsenal.register!(base)  
+
+    extend Arsenal::Macros
+    include Arsenal::Model
   end
+
+
 
   # The collection model for a given arsenal model
   #
@@ -43,6 +48,8 @@ module Arsenal
   #
   # @return [Arsenal::Collection] the collection class for the model
   def self.collection_for(model)
+    # XXX: possibly in the wrong place, maybe there should be an Arsenal::Registry
+    #class proper?
     retrieve_class(model, :collection)
   end
 
@@ -52,6 +59,8 @@ module Arsenal
   #
   # @return [Arsenal::Collection] the persisted class for the model
   def self.persisted_for(model)
+    # XXX: possibly in the wrong place, maybe there should be an Arsenal::Registry
+    #class proper?
     retrieve_class(model, :persisted)
   end
 
@@ -100,15 +109,5 @@ module Arsenal
     Kernel.send(:define_method, "nil_#{base.to_s.downcase}") do
       base::Nil.instance
     end
-  end
-
-  # @private
-  module ClassMethods
-    include Arsenal::Macros
-  end
-
-  # @private
-  module InstanceMethods
-    include Arsenal::Model
   end
 end
