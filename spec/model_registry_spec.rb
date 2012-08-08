@@ -21,19 +21,26 @@ describe Arsenal::ModelRegistry do
   it { should respond_to :persisted_for  }
   it { should respond_to :repository_for }
 
-  describe "#collection_for" do
-    subject { registry.collection_for(FakeModel) } 
-    it { should be FakeModel::Collection } 
-  end
-  
-  describe "#nil_for" do
-    subject { registry.nil_for(FakeModel) } 
-    it { should be FakeModel::Nil } 
-  end
-  
-  describe "#persisted_for" do
-    subject { registry.persisted_for(FakeModel) } 
-    it { should be FakeModel::Persisted } 
+  context "looking up the root model" do
+    describe "#collection_for" do
+      subject { registry.collection_for(FakeModel) } 
+      it { should be FakeModel::Collection } 
+    end
+
+    describe "#nil_for" do
+      subject { registry.nil_for(FakeModel) } 
+      it { should be FakeModel::Nil } 
+    end
+
+    describe "#persisted_for" do
+      subject { registry.persisted_for(FakeModel) } 
+      it { should be FakeModel::Persisted } 
+    end
+
+    describe "#repository_for" do
+      subject { registry.repository_for(FakeModel) } 
+      it { should be FakeModel::Repository } 
+    end
   end
   
   describe "#persisted_for" do
