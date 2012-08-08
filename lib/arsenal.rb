@@ -10,6 +10,10 @@ require 'singleton'
 # module based, and easy to use.
 module Arsenal
   extend ActiveSupport::Concern  
+  extend Forwardable
+  class << self
+    extend Forwardable 
+  end
 
   included do
     extend Forwardable
@@ -40,74 +44,29 @@ module Arsenal
     include Arsenal::Model
   end
 
-
-
-  # The collection model for a given arsenal model
-  #
-  # @param model [Arsenal::Model] the model to retrieve the collection class for
-  #
-  # @return [Arsenal::Collection] the collection class for the model
-  def self.collection_for(model)
-    # XXX: possibly in the wrong place, maybe there should be an Arsenal::Registry
-    #class proper?
-    retrieve_class(model, :collection)
-  end
-
-  # The persisted model for a given arsenal model
-  #
-  # @param model [Arsenal::Model] the model to retrieve the persisted class for
-  #
-  # @return [Arsenal::Collection] the persisted class for the model
-  def self.persisted_for(model)
-    # XXX: possibly in the wrong place, maybe there should be an Arsenal::Registry
-    #class proper?
-    retrieve_class(model, :persisted)
+  class << self
+    delegate [:collection_for, :persisted_for] => :registry
   end
 
   private 
 
-  #@private
-  def self.retrieve_class(model, klass)
-    model = model.class unless model.is_a?(Class)
-    return unless have_model?(model)
-    registry[model][klass] 
-  end
+  class << self
+    delegate [:register!] => :registry
+    
+    # the hash of all models which are wired up as arsenal models, and references
+    # to each of their arsenal-defined classes (including the model itself)
+    #
+    # @return [Arsenal::Registry] all of the Arsenal Models and their Arsenal-defined classes
+    def registry
+      @registry ||= Arsenal::ModelRegistry.new 
+    end
 
-  # Check if there has been an Arsenal Model created for the given model.
-  #
-  # @param model [Class] the model to check
-  #
-  # @return true if Arsenal has wired up the given class as an Arsenal Model
-  def self.have_model?(model)
-    registry.has_key?(model)
-  end
-
-  # register a new class as having been wired up by arsenal as an Arsenal Model
-  #
-  # @param model [Class] the model class to register
-  def self.register!(model)
-    registry[model] = { 
-           model: model,
-             nil: model::Nil,
-       persisted: model::Persisted,
-      collection: model::Collection,
-      repository: model::Repository
-    }
-    nil
-  end
-
-  # the hash of all models which are wired up as arsenal models, and references
-  # to each of their arsenal-defined classes (including the model itself)
-  #
-  # @return [Hash] all of the Arsenal Models and their Arsenal-defined classes
-  def self.registry
-    @registry ||= {}
-  end
-
-  #@private
-  def self.create_nil_method!(base) 
-    Kernel.send(:define_method, "nil_#{base.to_s.downcase}") do
-      base::Nil.instance
+    #@private
+    def create_nil_method!(base) 
+      Kernel.send(:define_method, "nil_#{base.to_s.downcase}") do
+        base::Nil.instance
+      end
     end
   end
+
 end
