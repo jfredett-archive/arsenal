@@ -42,9 +42,30 @@ describe Arsenal::ModelRegistry do
       it { should be FakeModel::Repository } 
     end
   end
-  
-  describe "#persisted_for" do
-    subject { registry.persisted_for(FakeModel) } 
-    it { should be FakeModel::Persisted } 
+
+  %w{Persisted Repository Nil Collection}.each do |generated|
+    context "looking via the #{generated} generated model" do
+      let (:klass) { "FakeModel::#{generated}".constantize } 
+
+      describe "#collection_for" do
+        subject { registry.collection_for(klass) } 
+        it { should be FakeModel::Collection } 
+      end
+
+      describe "#nil_for" do
+        subject { registry.nil_for(klass) } 
+        it { should be FakeModel::Nil } 
+      end
+
+      describe "#persisted_for" do
+        subject { registry.persisted_for(klass) } 
+        it { should be FakeModel::Persisted } 
+      end
+
+      describe "#persisted_for" do
+        subject { registry.repository_for(klass) } 
+        it { should be FakeModel::Repository } 
+      end
+    end
   end
 end

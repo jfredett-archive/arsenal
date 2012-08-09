@@ -75,9 +75,11 @@ module Arsenal
     end
 
     private 
+
     #@private
     def retrieve_class(model, klass)
       model = model.class unless model.is_a?(Class)
+      model = model.send(:__associated_arsenal_model) if model.respond_to?(:__associated_arsenal_model)
       return unless have_model?(model)
       self[model][klass] 
     end

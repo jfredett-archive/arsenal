@@ -23,19 +23,23 @@ module Arsenal
     base::Repository = Class.new do
       extend Arsenal::Repository
     end
+    Arsenal.create_associated_model_method!(base::Repository, base)
 
     base::Nil = Class.new do
       include Arsenal::Nil
     end
     base::Nil.nil_model = base
+    Arsenal.create_associated_model_method!(base::Nil, base)
 
     base::Persisted = Class.new(base) do
       include Arsenal::Persisted
     end
+    Arsenal.create_associated_model_method!(base::Persisted, base)
 
     base::Collection = Class.new(Array) do
       include Arsenal::Collection
     end
+    Arsenal.create_associated_model_method!(base::Collection, base)
 
     Arsenal.create_nil_method!(base)
     Arsenal.register!(base)  
@@ -52,7 +56,7 @@ module Arsenal
 
   class << self
     delegate [:register!] => :registry
-    
+
     # the hash of all models which are wired up as arsenal models, and references
     # to each of their arsenal-defined classes (including the model itself)
     #
@@ -67,6 +71,12 @@ module Arsenal
         base::Nil.instance
       end
     end
-  end
 
+    #@private
+    def create_associated_model_method!(klass, associated_model)
+      klass.send(:define_singleton_method, :__associated_arsenal_model) do
+        associated_model
+      end
+    end
+  end
 end
