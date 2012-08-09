@@ -29,6 +29,7 @@ describe 'Example::Repository' do
   end 
 
   let(:example) { Example.new } 
+  let(:persisted_example) { Example::Persisted.new } 
   
   after { Object.send(:remove_const, :Example) }
 
@@ -43,19 +44,28 @@ describe 'Example::Repository' do
         subject.save(example)
       end
 
-      it "returns an Example::Persisted if the save was successful" do 
-        fake1_driver.stub(:write => true)
-        fake2_driver.stub(:write => true)
-        subject.save(example).should be_a Example::Persisted
+      context "save successful" do
+        it "returns an Example::Persisted if the save was successful" do 
+          fake1_driver.stub(:write => true)
+          fake2_driver.stub(:write => true)
+          subject.save(example).should be_a Example::Persisted
+        end
+
+        pending 'integration test w/ drivers' do
+          it "FIXME: the persisted object reflects the saved attributes appropriately" 
+        end
       end
 
-      it "returns false if the save was unsuccessful" do
-        fake1_driver.stub(:write => false)
-        fake2_driver.stub(:write => true)
-        subject.save(example).should be_false
+
+      context "save failed" do
+        it "returns false if the save was unsuccessful" do
+          fake1_driver.stub(:write => false)
+          fake2_driver.stub(:write => true)
+          subject.save(example).should be_false
+        end
       end
       
-      pending "this is an integration test, where should it go?" do
+      pending "integration test w/ drivers" do
         #in particular, it integrates drivers (through #find and #write), models
         #(through comparing #id's) and repositories (the primary actor in all
         #this). it's nasty to stub, and really probably shouldn't be. Where
@@ -70,9 +80,31 @@ describe 'Example::Repository' do
     end
 
     context "updating a persisted Example" do
-      it "calls #update on the driver when it updates a model" 
-      it "returns true if the update was successful"
-      it "returns false if the update was unsuccessful"
+      it "calls #update on the driver when it updates a model" do
+        fake1_driver.should_receive(:update).with(:id => example.id, :foo => example.foo).at_most(:once)
+        fake2_driver.should_receive(:update).with(:id => example.id, :bar => example.bar).at_most(:once)
+        subject.save(persisted_example)
+      end
+
+      context "update successful" do
+        it "returns an Example::Persisted if the update was successful" do
+          fake1_driver.stub(:update => true)
+          fake2_driver.stub(:update => true)
+          subject.save(persisted_example).should be_a Example::Persisted
+        end
+
+        pending "integration test w/ drivers" do
+          it "returns an object containing the new updates"
+        end
+      end
+
+      context "update failed" do
+        it "returns false if the update was unsuccessful" do
+          fake1_driver.stub(:update => true)
+          fake2_driver.stub(:update => false)
+          subject.save(persisted_example).should be_false
+        end
+      end
     end
 
     context "saving a collection" do
@@ -100,7 +132,7 @@ describe 'Example::Repository' do
         subject.save(nil_example)
       end
 
-      it "returns false" do
+        it "returns false" do
         subject.save(nil_example).should be_false
       end
     end

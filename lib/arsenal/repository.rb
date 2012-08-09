@@ -19,10 +19,10 @@ module Arsenal
       return false unless model.savable?
 
       ok = case 
-        when model.persisted?
-          update(model)
         when model.collection?
           return proxy(model)  
+        when model.persisted?
+          update(model)
         else
           write(model) 
       end
@@ -53,11 +53,14 @@ module Arsenal
     end
 
     def update(model)
+      model.drivers.all? do |driver|
+        driver.update(model.attributes_for(driver))
+      end
     end
 
     def write(model)
       model.drivers.all? do |driver|
-        ok = driver.write(model.attributes_for(driver))
+        driver.write(model.attributes_for(driver))
       end
     end
   end
