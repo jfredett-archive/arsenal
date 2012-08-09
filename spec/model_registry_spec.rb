@@ -13,8 +13,9 @@ describe Arsenal::ModelRegistry do
   after  { Object.send(:remove_const, :FakeModel) }
   before { registry.register!(FakeModel) }
 
+  # #have_model? aliases to #have_key? at the ruby level, so there's no
+  # delegation, they're literally the same method
   it { should respond_to :have_model? } 
-  it "delegates #have_model? to #has_key?"
 
   it { should respond_to :collection_for }
   it { should respond_to :nil_for        }
