@@ -6,6 +6,12 @@ describe 'Example::Persisted' do
       include Arsenal 
       id :identifier
 
+      attribute :foo
+
+      def foo
+        @foo
+      end
+
       def identifier
         $identifier_number ||= 0
         $identifier_number += 1

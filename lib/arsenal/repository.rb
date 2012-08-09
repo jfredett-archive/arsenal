@@ -12,11 +12,22 @@ module Arsenal
     #
     # @param model [Arsenal::Model] the model to serialize.
     #
-    # @return [Boolean] true if the save was 100% successful, false otherwise.
+    # @return [Boolean, Arsenal::Persisted] returns a persisted version of the model 
+    #  (or a collection of persisted models in the case of a collection) if the save 
+    #  was 100% successful, false otherwise.
     def save(model)
-      return false         unless model.savable?
-      return update(model) if     model.persisted?
-      return write(model) 
+      return false unless model.savable?
+
+      ok = case 
+        when model.persisted?
+          update(model)
+        when model.collection?
+          proxy(model)  
+        else
+          write(model) 
+      end
+
+      persist(model) if ok
     end
 
     # todo: implement
@@ -29,12 +40,25 @@ module Arsenal
 
     private
 
+    def persist(model)
+      Arsenal.persisted_for(model).
+              new(model.attributes)
+    end
+
+    # proxy the Repository.save(model) across each element of the collection
+    def proxy(model)
+      model.each.with_object(Arsenal.collection_for(model).new) do |elt, coll|
+        return false unless res = save(elt)
+        coll << res
+      end
+    end
+
     def update(model)
     end
 
     def write(model)
       model.drivers.all? do |driver|
-        driver.write(model.attributes_for(driver))
+        ok = driver.write(model.attributes_for(driver))
       end
     end
   end

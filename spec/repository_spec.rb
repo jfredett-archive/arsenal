@@ -43,10 +43,10 @@ describe 'Example::Repository' do
         subject.save(example)
       end
 
-      it "returns true if the save was successful" do 
+      it "returns an Example::Persisted if the save was successful" do 
         fake1_driver.stub(:write => true)
         fake2_driver.stub(:write => true)
-        subject.save(example).should be_true
+        subject.save(example).should be_a Example::Persisted
       end
 
       it "returns false if the save was unsuccessful" do
@@ -62,8 +62,8 @@ describe 'Example::Repository' do
         #should it go?
         it "throws an error if there is an exact duplicate of the #id of the object it's trying to save" do
           expect { 
-            Example::Repository.save(example)
-            Example::Repository.save(example)
+            subject.save(example)
+            subject.save(example)
           }.to raise_error Arsenal::DuplicateRecord
         end
       end
@@ -76,9 +76,22 @@ describe 'Example::Repository' do
     end
 
     context "saving a collection" do
-      it "proxies the .save to each element if the collection is #savable" 
-      it "returns true if the saving/updating was successful for all elements"
-      it "returns false if any of the saves/updates fails"
+      let (:savable_collection) { Example::Collection.new([example]) } 
+      let (:unsavable_collection) { Example::Collection.new([example, nil_example]) }
+
+      #crappy test
+      it "returns a collection of persisted examples if the saving/updating was successful for all elements" do
+        subject.save(savable_collection).tap do |new_coll|
+          #new_coll.should be_a Example::Collection
+          #new_coll.each do |e|
+            #e.should be_a Example::Persisted
+          #end
+        end
+      end
+
+      it "returns false if any of the saves/updates fails" do
+        subject.save(unsavable_collection).should be_false
+      end
 
       pending "transactions" do
         it "doesn't save anything if any of the saves/updates fail" 
@@ -89,11 +102,11 @@ describe 'Example::Repository' do
       it "does nothing" do
         fake1_driver.should_not_receive(:write)
         fake2_driver.should_not_receive(:write)
-        Example::Repository.save(nil_example)
+        subject.save(nil_example)
       end
 
       it "returns false" do
-        Example::Repository.save(nil_example).should be_false
+        subject.save(nil_example).should be_false
       end
     end
   end
