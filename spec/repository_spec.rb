@@ -79,22 +79,17 @@ describe 'Example::Repository' do
       let (:savable_collection) { Example::Collection.new([example]) } 
       let (:unsavable_collection) { Example::Collection.new([example, nil_example]) }
 
-      #crappy test
       it "returns a collection of persisted examples if the saving/updating was successful for all elements" do
         subject.save(savable_collection).tap do |new_coll|
-          #new_coll.should be_a Example::Collection
-          #new_coll.each do |e|
-            #e.should be_a Example::Persisted
-          #end
+          new_coll.should be_a Example::Collection
+          new_coll.each do |e|
+            e.should be_a Example::Persisted
+          end
         end
       end
 
       it "returns false if any of the saves/updates fails" do
         subject.save(unsavable_collection).should be_false
-      end
-
-      pending "transactions" do
-        it "doesn't save anything if any of the saves/updates fail" 
       end
     end
 

@@ -22,7 +22,7 @@ module Arsenal
         when model.persisted?
           update(model)
         when model.collection?
-          proxy(model)  
+          return proxy(model)  
         else
           write(model) 
       end
@@ -47,9 +47,8 @@ module Arsenal
 
     # proxy the Repository.save(model) across each element of the collection
     def proxy(model)
-      model.each.with_object(Arsenal.collection_for(model).new) do |elt, coll|
-        return false unless res = save(elt)
-        coll << res
+      model.map! do |elt, coll|
+        save(elt).tap { |result| return false unless result }
       end
     end
 
