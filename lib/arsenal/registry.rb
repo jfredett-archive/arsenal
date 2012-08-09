@@ -1,4 +1,7 @@
 module Arsenal
+  # A registry object, accepts a proc on creation, which is called on the
+  # argument of #register whever it's called, the result is stored in a hash
+  # which can be looked up via #[]. Generally acts as a Hash.
   class Registry
     extend Forwardable
     include Enumerable
@@ -11,11 +14,23 @@ module Arsenal
       clear!(registry)
     end
 
+    # register a new entry in the registry
+    #
+    # @param registrant [Object] the object to register
+    #
+    # @return [Arsenal::Registry] the registry object, to allow chaining
     def register(registrant)
       registry[registrant] = mapper.call(registrant)
+      self
     end
     alias register! register
 
+    # clear the registry of all objects, optionally initializing it to the given
+    # value.
+    #
+    # @param registry [Object] an initial state for the registry
+    #
+    # @return [Arsenal::Registry] the cleared registry object, to allow chaining
     def clear!(registry = nil)
       @registry = registry || @original_registry
       self
@@ -26,6 +41,8 @@ module Arsenal
     attr_reader :registry, :mapper
   end
 
+  # A registry for Arsenal Models, contains arsenal-specific methods for
+  # retrieving generated classes.
   class ModelRegistry < Registry
     alias have_model? has_key?
 
