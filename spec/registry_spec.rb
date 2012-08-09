@@ -6,6 +6,7 @@ describe Arsenal::Registry do
   it { should respond_to :[] } 
   it { should respond_to :clear! } 
   it { should respond_to :has_key? } 
+  it { should respond_to :empty? } 
 
   it { should be_an Enumerable } 
   it { should respond_to :each } 
@@ -17,11 +18,13 @@ describe Arsenal::Registry do
   subject { registry } 
 
   describe "#register" do
-    before { registry.register(registrant) }
+    subject { registry.register(registrant) }
 
+    it { should be registry } 
     it { should have_key registrant } 
 
     context "the value associated with the registered key" do
+      before { registry.register(registrant) }
       subject { registry[registrant] } 
 
       it { should == mapper.call(registrant) }
@@ -35,7 +38,10 @@ describe Arsenal::Registry do
       registry.clear! 
     end
 
-    it { should_not have_key(registry) }
+    it { should_not have_key(registrant) }
+    it { should be_empty } 
+
+    it { should be_a Arsenal::Registry } 
   end
 
   context "delegated methods" do

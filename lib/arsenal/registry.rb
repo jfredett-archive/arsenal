@@ -6,11 +6,11 @@ module Arsenal
     extend Forwardable
     include Enumerable
 
-    delegate [:[], :has_key?, :each] => :registry
+    delegate [:[], :has_key?, :each, :empty?] => :registry
 
     def initialize(registry = {}, &block)
       @mapper = block
-      @original_registry = registry
+      @original_registry = registry.dup
       clear!(registry)
     end
 
