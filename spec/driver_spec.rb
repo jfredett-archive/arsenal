@@ -21,10 +21,14 @@ shared_examples_for "Arsenal::Driver" do
     # sql db, it might be a table name. in the case of documents, it might be
     # null, or an index in which to index the document (as in elastic search)
     it "expects to be given a ruby hash and a location in which to store that item"
+
+    it "finds the same item, when given the same ruby hash and location"
+
+    it "finds the same item, when given a hash containing only the items identifier attribute"
   end
 
   describe '#find' do
-    it 'expects a hash of properties to look for, and a location to look in'
+    it 'expects a hash of properties to look for, and a location to look in' 
     it 'returns a collection of hashes'
   end
 
