@@ -6,6 +6,9 @@ describe "The Arsenal Module" do
 
   it { should respond_to :collection_for } 
   it { should respond_to :persisted_for } 
+  it { should respond_to :model_for }
+  it { should respond_to :nil_for } 
+  it { should respond_to :repository_for } 
 
   context "before it's included" do
     before do
@@ -53,30 +56,46 @@ describe "The Arsenal Module" do
       end 
     end
 
-    it "defines the Example::Repository class" do
-      "Example::Repository".should be_defined
+    context "generated classes" do
+      it "defines the Example::Repository class" do
+        "Example::Repository".should be_defined
+      end
+
+      it "defines the Example::Nil class" do
+        "Example::Nil".should be_defined
+      end
+
+      it "defines the Example::Persisted class" do
+        "Example::Persisted".should be_defined
+      end
+
+      it "defines the Example::Collection class" do
+        "Example::Collection".should be_defined
+      end
     end
 
-    it "defines the Example::Nil class" do
-      "Example::Nil".should be_defined
+    context 'generated model accessors' do
+      describe "#collection_for" do
+        subject { Arsenal.collection_for(Example) }
+        it { should be Example::Collection }
+      end
+
+      describe "#persisted_for" do
+        subject { Arsenal.persisted_for(Example) }
+        it { should be Example::Persisted }
+      end
+
+      describe "#model_for" do
+        subject { Arsenal.model_for(Example) }
+        it { should be Example }
+      end
+
+      describe "#repository_for" do
+        subject { Arsenal.repository_for(Example) }
+        it { should be Example::Repository }
+      end
     end
 
-    it "defines the Example::Persisted class" do
-      "Example::Persisted".should be_defined
-    end
-
-    it "defines the Example::Collection class" do
-      "Example::Collection".should be_defined
-    end
-
-    describe "#collection_for" do
-      subject { Arsenal.collection_for(Example) }
-      it { should be Example::Collection }
-    end
-
-    describe "#persisted_for" do
-      subject { Arsenal.persisted_for(Example) }
-      it { should be Example::Persisted }
     end
   end
 end

@@ -22,7 +22,7 @@ describe Arsenal::ModelRegistry do
   it { should respond_to :persisted_for  }
   it { should respond_to :repository_for }
 
-  context "looking up the root model" do
+  context "looking up via the root model" do
     describe "#collection_for" do
       subject { registry.collection_for(FakeModel) } 
       it { should be FakeModel::Collection } 
@@ -41,6 +41,11 @@ describe Arsenal::ModelRegistry do
     describe "#repository_for" do
       subject { registry.repository_for(FakeModel) } 
       it { should be FakeModel::Repository } 
+    end
+
+    describe "#model_for" do
+      subject { registry.model_for(FakeModel) } 
+      it { should be FakeModel } 
     end
   end
 
@@ -66,6 +71,11 @@ describe Arsenal::ModelRegistry do
       describe "#persisted_for" do
         subject { registry.repository_for(klass) } 
         it { should be FakeModel::Repository } 
+      end
+
+      describe "#model_for" do
+        subject { registry.model_for(FakeModel) } 
+        it { should be FakeModel } 
       end
     end
   end

@@ -107,8 +107,6 @@ describe 'Example' do
   context 'instance' do
     before do
       class Example
-
-
         attribute :flibble, :driver => :some_driver
         attribute :flobble, :driver => :some_driver
         attribute :weeble, :driver => :some_other_driver
@@ -137,16 +135,9 @@ describe 'Example' do
     it { should respond_to :attributes_for } 
     
     describe '#drivers' do
-      subject { example.drivers } 
-
-      it { should_not be_nil } 
-      it { should respond_to :each } 
-      it { should be_an Enumerable } 
-
-      it { should =~ [:some_driver, :some_other_driver] } 
-
-      it 'does not contain nils' do
-        subject.all? { |e| e.should_not be_nil } 
+      it "delegates to the class method" do
+        Example.should_receive(:drivers)
+        subject.drivers
       end
     end
 
