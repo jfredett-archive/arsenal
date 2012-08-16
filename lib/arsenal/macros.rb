@@ -48,5 +48,14 @@ module Arsenal
       superclass_attrs = superclass.attributes if superclass.respond_to? :attributes
       @__attrs ||= AttributeCollection.new + superclass_attrs
     end
+
+
+    # Returns the list of all drivers the model's attributes use
+    #
+    # @return [Array<Symbol>] The list of the names of all the drivers used by
+    #  the attributes.
+    def drivers
+      attributes.map(&:driver).uniq.reject(&:nil?)
+    end
   end
 end

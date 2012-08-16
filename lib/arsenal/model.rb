@@ -69,8 +69,10 @@ module Arsenal
     #
     # @return [Array<Symbol>] The list of the names of all the drivers used by
     #  the attributes.
+    #
+    # @deprecated
     def drivers
-      full_attributes.map(&:driver).uniq.reject(&:nil?)
+      self.class.drivers
     end
 
     # The model is not a collection of other models

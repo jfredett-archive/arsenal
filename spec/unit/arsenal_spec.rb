@@ -96,6 +96,27 @@ describe "The Arsenal Module" do
       end
     end
 
+    describe '#drivers' do
+      before do
+        class Example
+          attribute :flibble, :driver => :some_driver
+          attribute :flobble, :driver => :some_driver
+          attribute :weeble, :driver => :some_other_driver
+        end
+      end
+
+      subject { Example.drivers } 
+
+      it { should_not be_nil } 
+      it { should respond_to :each } 
+      it { should be_an Enumerable } 
+
+      it { should =~ [:some_driver, :some_other_driver] } 
+
+      it 'does not contain nils' do
+        subject.all? { |e| e.should_not be_nil } 
+      end
     end
   end
+
 end
