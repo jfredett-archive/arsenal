@@ -75,6 +75,4 @@ describe 'be_a_subset_of, be_a_superset_of' do
       include_super.should be_a_superset_of include_sub
     end
   end
-
-
 end
