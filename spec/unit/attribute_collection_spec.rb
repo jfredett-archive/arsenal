@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec/unit/unit_spec_helper'
 
 describe Arsenal::AttributeCollection do
   let(:attr1) { Arsenal::Attribute.new(:fee, default: :tweedle) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec/unit/unit_spec_helper'
 
 describe 'Example::Repository' do
   let(:fake1_driver) { double('fake1_driver').as_null_object } 

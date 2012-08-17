@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec/unit/unit_spec_helper'
 
 describe 'Example::Persisted' do
   before do

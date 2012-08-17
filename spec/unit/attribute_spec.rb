@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec/unit/unit_spec_helper'
 describe Arsenal::Attribute do
   let(:attribute) { Arsenal::Attribute.new(:foo, default: :baz) } 
 

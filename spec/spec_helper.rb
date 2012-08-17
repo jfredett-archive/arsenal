@@ -14,4 +14,3 @@ RSpec.configure do |config|
 
   config.include(CustomMatchers)
 end
-

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec/unit/unit_spec_helper'
 
 describe "The Arsenal Module" do
   subject { Arsenal } 

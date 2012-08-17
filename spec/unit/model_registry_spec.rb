@@ -1,4 +1,4 @@
-require 'spec_helper'
+require './spec/unit/unit_spec_helper'
 
 describe Arsenal::ModelRegistry do
   let! (:fake_model) do
