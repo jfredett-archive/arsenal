@@ -8,7 +8,7 @@ module Arsenal
 
     delegate [:[], :has_key?, :each, :empty?] => :registry
 
-    def initialize(registry = {}, &block)
+    def initialize(registry = Hash.new({}), &block)
       @mapper = block
       @original_registry = registry.dup
       clear!(registry)
@@ -43,11 +43,14 @@ module Arsenal
 
   # A registry for Arsenal Models, contains arsenal-specific methods for
   # retrieving generated classes.
+  #
+  # NB. In this class, [Arsenal::Model] in the parameters section means the
+  # original including class, or any of the Arsenal-generated classes.
   class ModelRegistry < Registry
     alias have_model? has_key?
 
-    def initialize(registry = {})
-      super(registry) do |model|
+    def initialize
+      super do |model|
         { model: model,
           nil: model::Nil,
           persisted: model::Persisted,
@@ -92,8 +95,10 @@ module Arsenal
       retrieve_class(model, :repository)
     end
 
-    # The model for a given arsenal model (for use primarily with generated
-    # models)
+    # The Arsenal model proper for a given arsenal model
+    #
+    # NB. This is used primarily by the generated classes to get at the
+    # including class
     #
     # @param model [Arsenal::Model] the model to retrieve the repository class for
     #
@@ -106,10 +111,11 @@ module Arsenal
 
     #@private
     def retrieve_class(model, klass)
-      model = model.class unless model.is_a?(Class)
-      model = model.send(:__associated_arsenal_model) if model.respond_to?(:__associated_arsenal_model)
-      return unless have_model?(model)
-      self[model][klass] 
+      #unwrap the given model if it's an instance/generated model
+      model = model.class unless model.is_a? Class
+      model = model.__associated_arsenal_model if model.respond_to? :__associated_arsenal_model
+      return self[model][klass] unless model.nil? #or self[model].nil?
     end
+
   end
 end
