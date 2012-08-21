@@ -44,26 +44,12 @@ module Arsenal
     def method_missing(method, *args, &block) 
       return super if respond_to? method
 
-      if attr = nil_model.attributes[method]
+      if attr = Arsenal.model_for(self).attributes[method]
         return attr.default
       end
 
       super
     end
-
-    private 
-
-    # @private
-    def nil_model
-      self.class.nil_model
-    end
-  end
-
-  # The NilMacros module loads class-level methods onto the Nil-class for a
-  # given Arsenal Model
-  module NilMacros
-    # @private
-    attr_accessor :nil_model
   end
 
   # @private
@@ -76,10 +62,6 @@ module Arsenal
 
     module InstanceMethods
       include Arsenal::NilModel
-    end
-
-    module ClassMethods
-      include Arsenal::NilMacros
     end
   end
 end

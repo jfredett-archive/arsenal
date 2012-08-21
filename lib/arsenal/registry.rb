@@ -48,7 +48,8 @@ module Arsenal
 
     def initialize(registry = {})
       super(registry) do |model|
-        { nil: model::Nil,
+        { model: model,
+          nil: model::Nil,
           persisted: model::Persisted,
           collection: model::Collection,
           repository: model::Repository }
@@ -89,6 +90,16 @@ module Arsenal
     # @return [Arsenal::Repository] the repository class for the model
     def repository_for(model)
       retrieve_class(model, :repository)
+    end
+
+    # The model for a given arsenal model (for use primarily with generated
+    # models)
+    #
+    # @param model [Arsenal::Model] the model to retrieve the repository class for
+    #
+    # @return [Arsenal::Model] the repository class for the model
+    def model_for(model)
+      retrieve_class(model, :model)
     end
 
     private 

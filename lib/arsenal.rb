@@ -18,9 +18,6 @@ module Arsenal
     self::Collection    = Class.new(Array) { include Arsenal::Collection }
     self::Nil           = Class.new        { include Arsenal::Nil        }
 
-    #TODO: get rid of this?
-    self::Nil.nil_model = self
-
     Arsenal.create_associated_model_method!(self::Repository, self)
     Arsenal.create_associated_model_method!(self::Nil, self)
     Arsenal.create_associated_model_method!(self::Persisted, self)
@@ -33,7 +30,7 @@ module Arsenal
 
   class << self
     extend Forwardable 
-    delegate [:register!, :collection_for, :persisted_for] => :registry
+    delegate [:register!, :nil_for, :model_for, :repository_for, :collection_for, :persisted_for] => :registry
 
     # The registry of all models which are wired up as arsenal models, and
     # references to each of their arsenal-defined classes (including the model
