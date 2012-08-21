@@ -50,31 +50,13 @@ describe 'Example::Repository' do
           fake2_driver.stub(:write => true)
           subject.save(example).should be_a Example::Persisted
         end
-
-        pending 'integration test w/ drivers' do
-          it "FIXME: the persisted object reflects the saved attributes appropriately" 
-        end
       end
-
 
       context "save failed" do
         it "returns false if the save was unsuccessful" do
           fake1_driver.stub(:write => false)
           fake2_driver.stub(:write => true)
           subject.save(example).should be_false
-        end
-      end
-      
-      pending "integration test w/ drivers" do
-        #in particular, it integrates drivers (through #find and #write), models
-        #(through comparing #id's) and repositories (the primary actor in all
-        #this). it's nasty to stub, and really probably shouldn't be. Where
-        #should it go?
-        it "throws an error if there is an exact duplicate of the #id of the object it's trying to save" do
-          expect { 
-            subject.save(example)
-            subject.save(example)
-          }.to raise_error Arsenal::DuplicateRecord
         end
       end
     end
@@ -91,10 +73,6 @@ describe 'Example::Repository' do
           fake1_driver.stub(:update => true)
           fake2_driver.stub(:update => true)
           subject.save(persisted_example).should be_a Example::Persisted
-        end
-
-        pending "integration test w/ drivers" do
-          it "returns an object containing the new updates"
         end
       end
 
@@ -132,7 +110,7 @@ describe 'Example::Repository' do
         subject.save(nil_example)
       end
 
-        it "returns false" do
+      it "returns false" do
         subject.save(nil_example).should be_false
       end
     end

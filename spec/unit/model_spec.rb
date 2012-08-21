@@ -101,10 +101,6 @@ describe 'Example' do
           end
         end
       end
-
-      pending 'drivers' do
-        it 'optionally takes a list of drivers registered with this class in which to store the attribute' 
-      end
     end
   end
 
