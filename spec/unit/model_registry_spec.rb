@@ -30,7 +30,7 @@ describe Arsenal::ModelRegistry do
 
     describe "#nil_for" do
       subject { registry.nil_for(FakeModel) } 
-      it { should be FakeModel::Nil } 
+      it { should be FakeModel::Nil.instance } 
     end
 
     describe "#persisted_for" do
@@ -60,7 +60,7 @@ describe Arsenal::ModelRegistry do
 
       describe "#nil_for" do
         subject { registry.nil_for(klass) } 
-        it { should be FakeModel::Nil } 
+        it { should be FakeModel::Nil.instance } 
       end
 
       describe "#persisted_for" do

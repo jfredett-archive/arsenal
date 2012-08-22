@@ -52,7 +52,7 @@ module Arsenal
     def initialize
       super do |model|
         { model: model,
-          nil: model::Nil,
+          nil: model::Nil.instance,
           persisted: model::Persisted,
           collection: model::Collection,
           repository: model::Repository }
