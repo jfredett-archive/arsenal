@@ -1,18 +1,18 @@
 require './spec/unit/unit_spec_helper'
 
 describe "The Arsenal Module" do
-  subject { Arsenal } 
+  subject { Arsenal }
   after { Object.send(:remove_const, :Example) rescue nil }
 
-  it { should respond_to :collection_for } 
-  it { should respond_to :persisted_for } 
+  it { should respond_to :collection_for }
+  it { should respond_to :persisted_for }
   it { should respond_to :model_for }
-  it { should respond_to :nil_for } 
-  it { should respond_to :repository_for } 
+  it { should respond_to :nil_for }
+  it { should respond_to :repository_for }
 
   context "before it's included" do
     before do
-      class Example 
+      class Example
       end
     end
 
@@ -46,14 +46,14 @@ describe "The Arsenal Module" do
   context "after it's included" do
     before do
       class Example
-        include Arsenal 
+        include Arsenal
         id :identifier
 
         def identifier
           $identifier_number ||= 0
           $identifier_number += 1
         end
-      end 
+      end
     end
 
     context "generated classes" do
@@ -105,16 +105,16 @@ describe "The Arsenal Module" do
         end
       end
 
-      subject { Example.drivers } 
+      subject { Example.drivers }
 
-      it { should_not be_nil } 
-      it { should respond_to :each } 
-      it { should be_an Enumerable } 
+      it { should_not be_nil }
+      it { should respond_to :each }
+      it { should be_an Enumerable }
 
-      it { should =~ [:some_driver, :some_other_driver] } 
+      it { should =~ [:some_driver, :some_other_driver] }
 
       it 'does not contain nils' do
-        subject.all? { |e| e.should_not be_nil } 
+        subject.all? { |e| e.should_not be_nil }
       end
     end
   end

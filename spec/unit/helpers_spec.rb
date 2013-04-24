@@ -42,10 +42,10 @@ describe 'be_a_subset_of, be_a_superset_of' do
   end
 
   let (:subset) { [1,3,4] }
-  let (:superset) { [1,2,3,4,5,6] } 
+  let (:superset) { [1,2,3,4,5,6] }
 
-  let (:include_sub) { IncluderExample.new("abc") } 
-  let (:include_super) { IncluderExample.new("abcde") } 
+  let (:include_sub) { IncluderExample.new("abc") }
+  let (:include_super) { IncluderExample.new("abcde") }
 
 
   describe 'be_a_subset_of' do

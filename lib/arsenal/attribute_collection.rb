@@ -18,14 +18,14 @@ module Arsenal
     #
     # @return an array of attribute names
     def keys
-      map { |a| a.name } 
+      map { |a| a.name }
     end
 
     # Add a new attribute to the collection
     #
     # @param attr [#name,#default] A new attribute-like object which is to be added
     #  to the collection
-    #  
+    #
     # @return [Arsenal::AttributeCollection] the receiving AttributeCollection,
     #  which now has the new attribute added.
     #
@@ -44,7 +44,7 @@ module Arsenal
     # @return [Arsenal::Attribute, nil] Returns an attribute if one is found,
     #  nil otherwise
     def [](key)
-      find { |e| e.name == key } 
+      find { |e| e.name == key }
     end
 
     # Given a model upon which to act, return a hash from attribute name to
@@ -52,7 +52,7 @@ module Arsenal
     #
     # @param obj [Arsenal::Model] An object which implements all of the attribute methods
     #
-    # @return [Hash] a hash containing all of the attribute names as keys, 
+    # @return [Hash] a hash containing all of the attribute names as keys,
     #  and their corresponding values as values
     def to_hash(obj)
       each.with_object({}) do |e,a|
@@ -69,7 +69,7 @@ module Arsenal
     #  containing the attributes from both collections
     def +(other)
       return self.dup if other.nil?
-      other.each { |attr| assert_quacks_like_attribute attr } 
+      other.each { |attr| assert_quacks_like_attribute attr }
       super
     end
 
@@ -93,7 +93,7 @@ module Arsenal
       select { |a| a.name == :id || a.driver == driver }
     end
 
-    private 
+    private
 
     def assert_quacks_like_attribute(attr)
       raise ArgumentError unless attr.respond_to? :name and attr.respond_to? :default

@@ -1,37 +1,37 @@
 require './spec/unit/unit_spec_helper'
 
 describe 'Example' do
-  before do 
+  before do
     class Example
-      include Arsenal 
+      include Arsenal
       id :identifier
-      
+
       def identifier
         $identifier_number ||= 0
         $identifier_number += 1
       end
-    end 
+    end
   end
   after { Object.send(:remove_const, :Example) }
 
   context 'class' do
 
-    subject { Example } 
+    subject { Example }
 
     it { should respond_to :id }
-    it { should respond_to :attribute } 
+    it { should respond_to :attribute }
 
     describe '#id' do
-      subject { Example.attributes[:id] } 
+      subject { Example.attributes[:id] }
 
-      after { Object.send(:remove_const, :ErrorExample) rescue nil } 
+      after { Object.send(:remove_const, :ErrorExample) rescue nil }
 
-      it { should_not be_nil } 
+      it { should_not be_nil }
       it { should be_required }
-      it { should_not have_default } 
+      it { should_not have_default }
 
       it 'causes an error when instantiating if it is not provided' do
-        expect { 
+        expect {
           class ErrorExample
             include Arsenal
           end
@@ -43,7 +43,7 @@ describe 'Example' do
     describe '#attribute' do
       before do
         class Example
-          attribute :foo, 
+          attribute :foo,
             default: :default_thing
 
           attribute :bar
@@ -57,14 +57,14 @@ describe 'Example' do
           attribute :proc2, :required => proc { |t| false }
 
           def foo
-            :thing 
+            :thing
           end
 
           def bar ; end
         end
       end
 
-      subject { Example.new } 
+      subject { Example.new }
 
       it "optionally takes a default value, which is used by the nil-model to populate it's #attributes" do
         subject.foo.should == :thing
@@ -114,26 +114,26 @@ describe 'Example' do
     end
 
     let(:example) { Example.new }
-    subject { example } 
+    subject { example }
 
     it { should respond_to :persisted? }
     it { should_not be_persisted }
 
     it { should respond_to :savable? }
-    it { should be_savable } 
+    it { should be_savable }
 
-    it { should respond_to :collection? } 
-    it { should_not be_a_collection } 
+    it { should respond_to :collection? }
+    it { should_not be_a_collection }
 
-    it { should respond_to :attributes } 
+    it { should respond_to :attributes }
     it { should respond_to :id }
 
     it { should respond_to :nil? }
-    it { should_not be_nil } 
+    it { should_not be_nil }
 
-    it { should respond_to :drivers } 
-    it { should respond_to :attributes_for } 
-    
+    it { should respond_to :drivers }
+    it { should respond_to :attributes_for }
+
     describe '#drivers' do
       it "delegates to the class method" do
         Example.should_receive(:drivers)
@@ -142,7 +142,7 @@ describe 'Example' do
     end
 
     describe "#attributes" do
-      before do 
+      before do
         class Example
           attribute :foo
         end
@@ -155,8 +155,8 @@ describe 'Example' do
     end
 
     describe '#attributes_for' do
-      subject { example.attributes_for(:some_driver) } 
-      its(:keys) { should =~ [:id, :flibble, :flobble] } 
+      subject { example.attributes_for(:some_driver) }
+      its(:keys) { should =~ [:id, :flibble, :flobble] }
     end
   end
 
@@ -175,7 +175,7 @@ describe 'Example' do
       end
     end
 
-    subject { Example } 
+    subject { Example }
 
     it '.new should take at least one parameter, the hash of attributes' do
       expect { subject.new(foo: 1, bar: 2) }.to_not raise_error ArgumentError

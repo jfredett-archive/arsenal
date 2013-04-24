@@ -107,7 +107,7 @@ module Arsenal
       retrieve_class(model, :model)
     end
 
-    private 
+    private
 
     #@private
     def retrieve_class(model, klass)

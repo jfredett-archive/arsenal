@@ -51,7 +51,7 @@ To use Arsenal, simply do:
 
 This will automatically create the `Example::*` classes used by arsenal to
 represent different model-states. These extra models are _designed to be
-patched_, so rip them open and add more methods. 
+patched_, so rip them open and add more methods.
 
 There are presently 5 classes that matter when talking about an Arsenal Model:
 
@@ -73,7 +73,7 @@ provides a very few, which you can find in the API documentation.
 
 This class is namespaced beneath your original including class (henceforth: the
 model). It represents a model already persisted in the database. It too can have
-methods loaded on it freely. 
+methods loaded on it freely.
 
 ###The ::Nil class
 
@@ -92,7 +92,7 @@ limitations in ruby, it cannot act as falsey, so make sure to explicitly call
 Further, Model::Nil responds to `#each`, you can essentially treat the ::Nil
 as a collection, which is useful for iterating over in a view, since you can
 always just `#each` over the result of a `#find` and count on the same interface
-being provided across all the models. 
+being provided across all the models.
 
 ### The ::Collection class
 

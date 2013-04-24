@@ -1,12 +1,12 @@
 module Arsenal
   # The Macros module contains class macros for an Arsenal Model.
-  module Macros 
+  module Macros
     # Sets a primary key for the model
     #
     # @param method [Symbol] the name of the method that will act as a primary
     #  key for the model.
     def id(method)
-      attribute :id, method: method.to_sym, required: true 
+      attribute :id, method: method.to_sym, required: true
     end
 
     # Sets an arbitrary attribute on the class
@@ -26,13 +26,13 @@ module Arsenal
     #   Accepts a value to be used as the 'default' value of this parameter in
     #   the context of the nil-class for this model. {Arsenal::NilModel Arsenal::Nil}
     #
-    # * `method` 
+    # * `method`
     #
     #   Accepts a symbol which indicates that the parameter should be named one
     #   thing, but accessed via a different method. Used primarily by the
     #   implementation of {Arsenal::Macros #id}
     #
-    # @param method [Symbol] the name of the method which should be populated by 
+    # @param method [Symbol] the name of the method which should be populated by
     #  the attribute.
     # @param opts [Hash] the set of options, described above, for the hash
     #

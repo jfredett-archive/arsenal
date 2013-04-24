@@ -6,7 +6,7 @@ module Arsenal
   # as methods, and return the default value associated with them, if there is
   # no default value, then `nil` is returned.
   module NilModel
-    
+
     # The model should act-as-nil, so this is defined as true.
     #
     # @return [Boolean] always true
@@ -18,7 +18,7 @@ module Arsenal
     #
     # @return [Boolean] always false
     def persisted? ; false ; end
-    
+
     # This model is not savable
     #
     # @return [Boolean] always false
@@ -39,9 +39,9 @@ module Arsenal
     #  model instance
     def attributes ; {id: nil}    ; end
 
-   
+
     # @private
-    def method_missing(method, *args, &block) 
+    def method_missing(method, *args, &block)
       return super if respond_to? method
 
       if attr = Arsenal.model_for(self).attributes[method]

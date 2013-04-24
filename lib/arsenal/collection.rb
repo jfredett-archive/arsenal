@@ -1,6 +1,6 @@
 module Arsenal
   # The collection module contains instance methods for the Arsenal-model
-  # collection class. 
+  # collection class.
   #
   # By default, the collection-class for a model delegates all methods to it's
   # components. When the call matches `(all|any)_<predicate>` (where
@@ -39,13 +39,13 @@ module Arsenal
     # The model is a collection of other models
     #
     # @return [Boolean] always true
-    def collection? 
+    def collection?
       true
     end
 
     # @private
     def method_missing(method, *args, &block)
-      super if respond_to? method 
+      super if respond_to? method
 
       iterator = :each
       predicate = method
@@ -55,7 +55,7 @@ module Arsenal
         predicate = $2.to_sym
       end
 
-      send(iterator) { |e| e.send(predicate, *args, &block) } 
+      send(iterator) { |e| e.send(predicate, *args, &block) }
     end
   end
 end

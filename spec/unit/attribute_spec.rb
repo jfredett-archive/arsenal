@@ -1,20 +1,20 @@
 require './spec/unit/unit_spec_helper'
 describe Arsenal::Attribute do
-  let(:attribute) { Arsenal::Attribute.new(:foo, default: :baz) } 
+  let(:attribute) { Arsenal::Attribute.new(:foo, default: :baz) }
 
-  subject { attribute } 
+  subject { attribute }
 
   it { should respond_to :name }
-  it { should respond_to :value } 
-  it { should respond_to :required? } 
+  it { should respond_to :value }
+  it { should respond_to :required? }
   it { should respond_to :default }
-  it { should respond_to :has_default? } 
+  it { should respond_to :has_default? }
   it { should respond_to :driver }
 
   context 'aliases' do
-    let(:attr_with_alias) { Arsenal::Attribute.new(:foo, method: :bar) } 
-    let(:attr_with_default) { Arsenal::Attribute.new(:foo, method: :bar, default: "fail") } 
-    let(:receiver) { receiver = double('instance') } 
+    let(:attr_with_alias) { Arsenal::Attribute.new(:foo, method: :bar) }
+    let(:attr_with_default) { Arsenal::Attribute.new(:foo, method: :bar, default: "fail") }
+    let(:receiver) { receiver = double('instance') }
 
     before do
       receiver.should_receive(:bar)
@@ -37,7 +37,7 @@ describe Arsenal::Attribute do
 
   describe '#required?' do
     context 'a required attribute' do
-      subject { Arsenal::Attribute.new(:chex, required: true) } 
+      subject { Arsenal::Attribute.new(:chex, required: true) }
       it { should be_required }
     end
 
@@ -47,29 +47,29 @@ describe Arsenal::Attribute do
   end
 
   describe '#default' do
-    its(:default) { should == :baz } 
+    its(:default) { should == :baz }
 
-    describe '#has_default?' do 
+    describe '#has_default?' do
       context 'when the attribute sets a default value' do
-        it { should have_default } 
+        it { should have_default }
       end
 
       context 'when the attribute does not set a default value' do
-        subject { Arsenal::Attribute.new(:quux) } 
-        it { should_not have_default } 
+        subject { Arsenal::Attribute.new(:quux) }
+        it { should_not have_default }
       end
     end
   end
 
   describe '#foo' do
     context '#value when the instance does not implement #foo' do
-      subject { attribute.value(Class.new { }.new) } 
-      it { should == :baz } 
+      subject { attribute.value(Class.new { }.new) }
+      it { should == :baz }
     end
 
     context '#value when the instance implements #foo' do
-      subject { attribute.value(Class.new { def foo ; 'the_value' ; end }.new) } 
-      it { should == 'the_value' } 
+      subject { attribute.value(Class.new { def foo ; 'the_value' ; end }.new) }
+      it { should == 'the_value' }
     end
   end
 end

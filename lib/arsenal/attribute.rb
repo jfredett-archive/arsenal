@@ -11,8 +11,8 @@ module Arsenal
     #
     # @return [Object,nil] the value of this attribute
     def value(instance)
-      return @default unless instance.respond_to?(method) 
-      instance.send(method)  
+      return @default unless instance.respond_to?(method)
+      instance.send(method)
     end
 
     # Whether or not the attribute has a default value.
@@ -39,7 +39,7 @@ module Arsenal
     #
     # @todo relocate option docs to here.
     #
-    # @param name [Symbol] the name of the method which should be populated by 
+    # @param name [Symbol] the name of the method which should be populated by
     #  the attribute.
     # @param opts [Hash] the set of options, described above, for the hash
     #
@@ -54,16 +54,16 @@ module Arsenal
 
     # @private
     def to_s
-      first_part = "#{name} => #{method}" 
+      first_part = "#{name} => #{method}"
       second_part = "(default: #{default})" if has_default?
-      [first_part, second_part].join(' ') 
+      [first_part, second_part].join(' ')
     end
     alias inspect to_s
 
-    private 
+    private
 
     # @private
-    def method 
+    def method
       method = @method || @name
     end
   end
